@@ -85,11 +85,11 @@ namespace PGTA
                                         break;
 
                                     case 4://I062/070 Time Of Track Information (cambiarlo)
-                                        I062_070 c4 = new I062_070(buffer[position], buffer[position + 1], buffer[position +2]);
+                                        I062_070 c4 = new I062_070(buffer[position], buffer[position + 1], buffer[position + 2]);
                                         data.Time_track_info = c4.getTimeTrackInfo();
                                         position = position + 3;
                                         break;
-                             
+
                                     case 5://I062/105 Calculated Track Position (WGS-84) 
                                         I062_105 c5 = new I062_105(buffer[position], buffer[position + 1], buffer[position + 2], buffer[position + 3], buffer[position + 4], buffer[position + 5], buffer[position + 6], buffer[position + 7]);
                                         data.Latitude = c5.getLat();
@@ -139,7 +139,7 @@ namespace PGTA
                                         string data_air_str = "";
                                         bool fx = true;
                                         int r;//length frns counter
-                                        for (r = 0; fx; r++)
+                                        for (r = 0; fx && r < 3; r++)
                                         {
                                             fx = false;
                                             string var1 = Convert.ToString(buffer[position + r], 2);
@@ -154,14 +154,14 @@ namespace PGTA
                                             }
                                             data_air_str = data_air_str + var1;
                                         }
-                                        
+
                                         position = position + r;
 
                                         for (int t = 0; t < data_air_str.Length; t++)
                                         {
                                             if (Convert.ToString(data_air_str[t]).Equals("1"))
                                             {
-                                                switch (t+1)
+                                                switch (t + 1)
                                                 {
                                                     //ocet 1
                                                     case 1://ADR
@@ -198,7 +198,7 @@ namespace PGTA
                                                         break;
 
                                                     case 7://FSS
-                                                       // bool
+                                                           // bool
                                                         data.Fms_altitude_selected = c11.getAltitude(buffer[position], buffer[position + 1]);
                                                         position = position + 2;
                                                         break;
@@ -290,12 +290,12 @@ namespace PGTA
 
                                         position++;
 
-                                        string var2 = Convert.ToString(buffer[position-1], 2);
+                                        string var2 = Convert.ToString(buffer[position - 1], 2);
                                         if (Convert.ToString(var2[var2.Length - 1]).Equals("1"))
                                         {
                                             c13.ext1(buffer[position]);
                                             data.Type_of_track = c13.getTypeOfTrack(); ;
-                                            data.IsLast_Msg = c13.isLastMsg(); 
+                                            data.IsLast_Msg = c13.isLastMsg();
                                             data.IsFirst_Msg = c13.isFirstMsg();
                                             data.IsFlight_plan_correlated = c13.isFlightPlanCorrelated();
                                             data.IsAdsb_inconsistent = c13.isAdsbInconsistent();
@@ -304,7 +304,7 @@ namespace PGTA
 
                                             position++;
 
-                                            var2 = Convert.ToString(buffer[position-1], 2);
+                                            var2 = Convert.ToString(buffer[position - 1], 2);
                                             if (Convert.ToString(var2[var2.Length - 1]).Equals("1"))
                                             {
                                                 c13.ext2(buffer[position]);
@@ -316,7 +316,7 @@ namespace PGTA
 
                                                 position++;
 
-                                                var2 = Convert.ToString(buffer[position-1], 2);
+                                                var2 = Convert.ToString(buffer[position - 1], 2);
                                                 if (Convert.ToString(var2[var2.Length - 1]).Equals("1"))
                                                 {
                                                     c13.ext3(buffer[position]);
@@ -330,7 +330,7 @@ namespace PGTA
 
                                                     position++;
 
-                                                    var2 = Convert.ToString(buffer[position-1], 2);
+                                                    var2 = Convert.ToString(buffer[position - 1], 2);
                                                     if (Convert.ToString(var2[var2.Length - 1]).Equals("1"))
                                                     {
                                                         c13.ext4(buffer[position]);
@@ -341,7 +341,7 @@ namespace PGTA
 
                                                         position++;
 
-                                                        var2 = Convert.ToString(buffer[position-1], 2);
+                                                        var2 = Convert.ToString(buffer[position - 1], 2);
                                                         if (Convert.ToString(var2[var2.Length - 1]).Equals("1"))
                                                         {
                                                             c13.ext5(buffer[position]);
@@ -362,6 +362,77 @@ namespace PGTA
                                         break;
 
                                     case 14://I062/290 System Track Update Ages (1+)
+                                        I062_290 c14 = new I062_290();
+                                        string system_ages = "";
+                                        bool fx_ages = true;
+                                        int o;//length frns counter
+                                        for (o = 0; fx_ages && o < 2; o++)
+                                        {
+                                            fx_ages = false;
+                                            string var1 = Convert.ToString(buffer[position + o], 2);
+                                            if (Convert.ToString(var1[var1.Length - 1]).Equals("1"))
+                                            {
+                                                fx_ages = true;
+                                            }
+                                            var1 = var1.Remove(var1.Length - 1);
+                                            while (var1.Length < 7)
+                                            {
+                                                var1 = "0" + var1;//padding
+                                            }
+                                            system_ages = system_ages + var1;
+                                        }
+
+                                        position = position + o;
+
+                                        for (int t = 0; t < system_ages.Length; t++)
+                                        {
+                                            if (Convert.ToString(system_ages[t]).Equals("1"))
+                                            {
+                                                switch (t + 1)
+                                                {
+                                                    case 1:
+                                                        data.Track_age = c14.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 2:
+                                                        data.Psr_age = c14.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 3:
+                                                        data.Ssr_age = c14.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 4:
+                                                        data.Mode_s_age = c14.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 5:
+                                                        data.Adsc_age = c14.get2oct(buffer[position], buffer[position + 1]);
+                                                        position = position + 2;
+                                                        break;
+                                                    case 6:
+                                                        data.Adsb_ext_sq_age = c14.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 7:
+                                                        data.Adsb_vdl_mode4_age = c14.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 8:
+                                                        data.Adsb_uat_age = c14.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 9:
+                                                        data.Loop_age = c14.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 10:
+                                                        data.Multilater_age = c14.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                }
+                                            }
+                                        }
 
                                         break;
 
@@ -375,37 +446,287 @@ namespace PGTA
                                         data.Status_movement_long = status_movement_long;
                                         data.Status_movement_vert = status_movement_vert;
                                         data.IsAltitudeDiscrepacy = altitude_discrepacy;
-                                        position ++;
+                                        position++;
 
                                         break;
 
                                     case 16://I062/295 Track Data Ages (1+)
+                                        I062_295 c16 = new I062_295();
+
+                                        string track_ages = "";
+                                        bool fx_track_ages = true;
+                                        int w;//length frns counter
+                                        for (w = 0; fx_track_ages && w < 2; w++)
+                                        {
+                                            fx_track_ages = false;
+                                            string var1 = Convert.ToString(buffer[position + w], 2);
+                                            if (Convert.ToString(var1[var1.Length - 1]).Equals("1"))
+                                            {
+                                                fx_track_ages = true;
+                                            }
+                                            var1 = var1.Remove(var1.Length - 1);
+                                            while (var1.Length < 7)
+                                            {
+                                                var1 = "0" + var1;//padding
+                                            }
+                                            track_ages = track_ages + var1;
+                                        }
+
+                                        position = position + w;
+
+                                        for (int t = 0; t < track_ages.Length; t++)
+                                        {
+                                            if (Convert.ToString(track_ages[t]).Equals("1"))
+                                            {
+                                                switch (t + 1)
+                                                {
+                                                    case 1:
+                                                        data.Meas_fl_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 2:
+                                                        data.Mode1_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 3:
+                                                        data.Mode2_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 4:
+                                                        data.Mode3A_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 5:
+                                                        data.Mode4_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 6:
+                                                        data.Mode5A_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 7:
+                                                        data.Mag_head_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 8:
+                                                        data.Ias_mach_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 9:
+                                                        data.Tas_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 10:
+                                                        data.Select_alt_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 11:
+                                                        data.Fin_select_alt_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 12:
+                                                        data.Traj_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 13:
+                                                        data.Comm_acas_flight_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 14:
+                                                        data.Stat_by_adsb_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 15:
+                                                        data.Acas_resol_advisory_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 16:
+                                                        data.Baromet_vert_rate_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 17:
+                                                        data.Geomet_vert_rate_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 18:
+                                                        data.Roll_angle_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 19:
+                                                        data.Track_angle_rate_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 20:
+                                                        data.Track_angle_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 21:
+                                                        data.Gs_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 22:
+                                                        data.Vel_uncert_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 23:
+                                                        data.Metd_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 24:
+                                                        data.Emitt_cat_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 25:
+                                                        data.Pos_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 26:
+                                                        data.Geom_alt_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 27:
+                                                        data.Pos_uncert_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 28:
+                                                        data.ModeSMB_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 29:
+                                                        data.Ias_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 30:
+                                                        data.Mach_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+                                                    case 31:
+                                                        data.Barom_press_sett_age = c16.get1oct(buffer[position]);
+                                                        position++;
+                                                        break;
+
+                                                }
+                                            }
+                                        }
                                         break;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                     case 17://I062/136 Measured Flight Level 
+                                        I062_136 c17 = new I062_136(buffer[position], buffer[position + 1]);
+                                        data.FL = c17.getFl();
+                                        position = position + 2;
                                         break;
+
                                     case 18://I062/130 Calculated Track Geometric Altitude 
+                                        I062_130 c18 = new I062_130(buffer[position], buffer[position + 1]);
+                                        data.TGA = c18.getTga();
+                                        position = position + 2;
                                         break;
+
                                     case 19://I062/135 Calculated Track Barometric Altitude 
+                                        I062_135 c19 = new I062_135(buffer[position], buffer[position + 1]);
+                                        data.TBA = c19.getTba();
+                                        data.CorrectionQNH = c19.getCorrectQNH();
+                                        position = position + 2;
                                         break;
-                                    case 20:
+
+                                    case 20://062/220 Calculated Rate Of Climb/Descent
+                                        I062_220 c20 = new I062_220(buffer[position], buffer[position + 1]);
+                                        data.Rate = c20.getRate();
+                                        position = position + 2;
                                         break;
-                                    case 21:
+
+                                    case 21: //I062/390 Flight Plan Related Data (1+)
+                                        I062_390 c21 = new I062_390(buffer[position], buffer[position + 1], buffer[position + 2], buffer[position + 3]);
+                                        string total_data = c21.GetTotalData();
+                                        for (int i = 0; i < total_data.Length; i++)
+                                        {
+                                            if (total_data[i].Equals("1"))
+                                            {
+                                                switch (i)
+                                                {
+                                                    case 1:
+                                                        break;
+                                                    case 2:
+                                                        break;
+                                                    case 3:
+                                                        break;
+                                                    case 4:
+                                                        break;
+                                                    case 5:
+                                                        break;
+                                                    case 6:
+                                                        break;
+                                                    case 7:
+                                                        break;
+                                                    case 8:
+                                                        break;
+                                                    case 9:
+                                                        break;
+                                                    case 10:
+                                                        break;
+                                                    case 11:
+                                                        break;
+                                                    case 12:
+                                                        break;
+                                                    case 13:
+                                                        break;
+                                                    case 14:
+                                                        break;
+                                                    case 15:
+                                                        break;
+                                                    case 16:
+                                                        break;
+                                                    case 17:
+                                                        break;
+                                                    case 18:
+                                                        break;
+                                                    case 19:
+                                                        break;
+                                                    case 20:
+                                                        break;
+                                                    case 21:
+                                                        break;
+                                                    case 22:
+                                                        break;
+                                                    case 23:
+                                                        break;
+                                                    case 24:
+                                                        break;
+                                                }
+                                            }
+                                        }                                        
                                         break;
-                                    case 22:
+
+                                    case 22: //I062/270 Target Size & Orientation 
+                                        ///////NOOO!!!!!!!!!!!!!!!!
                                         break;
-                                    case 23:
+
+                                    case 23: // I062/300 Vehicle Fleet Identification 
+                                        I062_300 c23 = new I062_300(buffer[position]);
+                                        data.Vehicle = c23.getVehicle();
+                                        position = position + 1;
                                         break;
-                                    case 24:
+
+                                    case 24://I062/110 Mode 5 Data reports & Extended Mode 1 Code 
+                           
                                         break;
-                                    case 25:
+
+                                    case 25: //I062/120 Track Mode 2 Code 
+                                        I062_120 c25 = new I062_120(buffer[position], buffer[position + 1]);
+                                        data.Octal_mode2A = c25.getOctal2A();
+                                        position = position + 2;
                                         break;
-                                    case 26:
+
+                                    case 26: //I062/510 Composed Track Number (3+)
+                                        ////////////////NO
                                         break;
-                                    case 27:
+
+                                    case 27: //I062/500 Estimated Accuracies  
+                                        //NOOO!!!!!!!!!!!!!
                                         break;
-                                    case 28:
+
+                                    case 28: //I062/340 Measured Information (1+)
                                         break;
 
                                     case 29:

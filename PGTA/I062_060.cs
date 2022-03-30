@@ -8,6 +8,7 @@ namespace PGTA
 {
     internal class I062_060
     {
+        bool prueba;
         bool validated;
         bool garbled_code;
         bool change_in_3A;
