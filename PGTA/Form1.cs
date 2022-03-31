@@ -198,7 +198,8 @@ namespace PGTA
                                                         break;
 
                                                     case 7://FSS
-                                                           // bool
+                                                        // bool
+
                                                         data.Fms_altitude_selected = c11.getAltitude(buffer[position], buffer[position + 1]);
                                                         position = position + 2;
                                                         break;
