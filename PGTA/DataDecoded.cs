@@ -30,19 +30,61 @@ namespace PGTA
         int target_addr;
         string target_id_380;
         double mag_heading;
-        bool mach;
-        double ias;
+        bool is_mach;
+        double ias_or_Mach;
         double tas;
         bool sas;
         string source;
-        double fms_altitude_selected;
+        double fms_altitude;
         bool manage_vertical;
         bool altitude_hold;
         bool approach_mode;
-        double final_altitude;
-
+        double fms_final_state_altitude;
+        bool trajIntentAviable;
+        bool trajIntentValid;
+        int rep_traj_int_fact;
+        bool tcp_available;
+        bool tcp_compilance;
+        int traj_chang_point;
+        double alt_traj_itent;
+        double lat_traj_int_wgs84;
+        double long_traj_int_wgs84;
+        string point_type;
+        string td;
+        bool turn_radius_availab;
+        bool tov_availab;
+        double time_over_time;
+        double tcp_trun_radius;
+        string comm_capability_transpond;
+        string flight_status;
+        bool specific_capability;
+        string alt_capability;
+        bool aircraft_id_capability;
+        string acas_adsb;
+        string mult_nav_aids_adsb;
+        string diff_correlation_adsb;
+        bool tranpond_ground_bit_set_adsb;
+        string flight_stat_adsb;
+        double barom_vert_rate;
+        double geom_vert_rate;
+        double roll_angle;
+        string turn_indicator;
+        double rate_of_turn;
+        double track_angle;
         double gs;
-
+        int vel_uncert_cat;
+        double wind_speed;
+        double wind_direction;
+        double temperature;
+        double turbulence;
+        string emitter_cat;
+        double aircraft_derived_latWGS84;
+        double aircraft_derived_longWGS84;
+        double geom_alt;
+        int position_uncert;
+        double ias;
+        double mach;
+        double barom_press_sett;
         int track_num;
         bool monosensor;
         bool spi;
@@ -88,6 +130,10 @@ namespace PGTA
         double adsb_uat_age;
         double loop_age;
         double multilater_age;
+        string status_movement_trans;
+        string status_movement_long;
+        string status_movement_vert;
+        bool altitude_discrepacy;
         double meas_fl_age;
         double mode1_age;
         double mode2_age;
@@ -121,10 +167,8 @@ namespace PGTA
         double barom_press_sett_age;
 
 
-        string status_movement_trans;
-        string status_movement_long;
-        string status_movement_vert;
-        bool altitude_discrepacy;
+
+
 
         double flight_level;
         double track_geometric_altitude;
@@ -161,22 +205,61 @@ namespace PGTA
         public int Target_addr { get { return target_addr; } set { target_addr = value; } }
         public string Target_id_380 { get { return target_id_380; } set { target_id_380 = value; } }
         public double Mag_heading { get { return mag_heading; } set { mag_heading = value; } }
-        public bool IsMach { get { return mach; } set { mach = value; } }
-        public double Ias { get { return ias; } set { ias = value; } }
+        public bool IsMach { get { return is_mach; } set { is_mach = value; } }
+        public double Ias_or_Mach { get { return ias_or_Mach; } set { ias_or_Mach = value; } }
         public double Tas { get { return tas; } set { tas = value; } }
         public bool IsSas { get { return sas; } set { sas = value; } }
         public string Source { get { return source; } set { source = value; } }
-        public double Fms_altitude_selected { get { return fms_altitude_selected; } set { fms_altitude_selected = value; } }
+        public double Fms_altitude { get { return fms_altitude; } set { fms_altitude = value; } }
         public bool IsManageVertical { get { return manage_vertical; } set { manage_vertical = value; } }
         public bool IsAltitudeHold { get { return altitude_hold; } set { altitude_hold = value; } }
         public bool IsApproachMode { get { return approach_mode; } set { approach_mode = value; } }
-        public double IsFinalAltitude { get { return final_altitude; } set { final_altitude = value; } }
-
-
+        public double Fms_final_state_altitude { get { return fms_final_state_altitude; } set { fms_final_state_altitude = value; } }
+        public bool isTrajIntentAviable { get { return trajIntentAviable; } set { trajIntentAviable = value; } }
+        public bool isTrajIntentValid { get { return trajIntentValid; } set { trajIntentValid = value; } }
+        public int Rep_traj_int_fact { get { return rep_traj_int_fact; } set { rep_traj_int_fact = value; } }
+        public bool isTcp_available { get { return tcp_available; } set { tcp_available = value; } }
+        public bool isTcp_compilance { get { return tcp_compilance; } set { tcp_compilance = value; } }
+        public int Traj_chang_point { get { return traj_chang_point; } set { traj_chang_point = value; } }
+        public double Alt_traj_itent { get { return alt_traj_itent; } set { alt_traj_itent = value; } }
+        public double Lat_traj_int_wgs84 { get { return lat_traj_int_wgs84; } set { lat_traj_int_wgs84 = value; } }
+        public double Long_traj_int_wgs84 { get { return long_traj_int_wgs84; } set { long_traj_int_wgs84 = value; } }
+        public string Point_type { get { return point_type; } set { point_type = value; } }
+        public string Td { get { return td; } set { td = value; } }
+        public bool isTurn_radius_available { get { return turn_radius_availab; } set { turn_radius_availab = value; } }
+        public bool isTov_available { get { return tov_availab; } set { tov_availab = value; } }
+        public double Time_over_time { get { return time_over_time; } set { time_over_time = value; } }
+        public double Tcp_trun_radius { get { return tcp_trun_radius; } set { tcp_trun_radius = value; } }
+        public string Comm_capability_transpond { get { return comm_capability_transpond; } set { comm_capability_transpond = value; } }
+        public string Flight_status { get { return flight_status; } set { flight_status = value; } }
+        public bool isSpecific_capability { get { return specific_capability; } set { specific_capability = value; } }
+        public string Alt_capability { get { return alt_capability; } set { alt_capability = value; } }
+        public bool isAircraft_id_capability { get { return aircraft_id_capability; } set { aircraft_id_capability = value; } }
+        public string Acas_adsb { get { return acas_adsb; } set { acas_adsb = value; } }
+        public string Mult_nav_aids_adsb { get { return mult_nav_aids_adsb; } set { mult_nav_aids_adsb = value; } }
+        public string Diff_correlation_adsb { get { return diff_correlation_adsb; } set { diff_correlation_adsb = value; } }
+        public bool isTranpond_ground_bit_set_adsb { get { return tranpond_ground_bit_set_adsb; } set { tranpond_ground_bit_set_adsb = value; } }
+        public string Flight_stat_adsb { get { return flight_stat_adsb; } set { flight_stat_adsb = value; } }
+        public double Barom_vert_rate { get { return barom_vert_rate; } set { barom_vert_rate = value; } }
+        public double Geom_vert_rate { get { return geom_vert_rate; } set { geom_vert_rate = value; } }
+        public double Roll_angle { get { return roll_angle; } set { roll_angle = value; } }
+        public string Turn_indicator { get { return turn_indicator; } set { turn_indicator = value; } }
+        public double Rate_of_turn { get { return rate_of_turn; } set { rate_of_turn = value; } }
+        public double Track_angle { get { return track_angle; } set { track_angle = value; } }
         public double GS { get { return gs; } set { gs = value; } }
-
-
-
+        public int Vel_uncert_cat { get { return vel_uncert_cat; } set { vel_uncert_cat = value; } }
+        public double Wind_speed { get { return wind_speed; } set { wind_speed = value; } }
+        public double Wind_direction { get { return wind_direction; } set { wind_direction = value; } }
+        public double Temperature { get { return temperature; } set { temperature = value; } }
+        public double Turbulence { get { return turbulence; } set { turbulence = value; } }
+        public string Emitter_cat { get { return emitter_cat; } set { emitter_cat = value; } }
+        public double Aircraft_derived_latWGS84 { get { return aircraft_derived_latWGS84; } set { aircraft_derived_latWGS84 = value; } }
+        public double Aircraft_derived_longWGS84 { get { return aircraft_derived_longWGS84; } set { aircraft_derived_longWGS84 = value; } }
+        public double Geom_alt { get { return geom_alt; } set { geom_alt = value; } }
+        public int Position_uncert { get { return position_uncert; } set { position_uncert = value; } }
+        public double Ias { get { return ias; } set { ias = value; } }
+        public double Mach { get { return mach; } set { mach = value; } }
+        public double Barom_press_sett { get { return barom_press_sett; } set { barom_press_sett = value; } }
         public int Track_num { get { return track_num; } set { track_num = value; } }
         public bool IsMonosensor { get { return monosensor; } set { monosensor = value; } }
         public bool IsSPI { get { return spi; } set { spi = value; } }
@@ -195,6 +278,17 @@ namespace PGTA
         public bool IsMilitary_emergency { get { return military_emergency; } set { military_emergency = value; } }
         public bool IsMilitary_id { get { return military_id; } set { military_id = value; } }
         public string Type_of_target_int5 { get { return type_of_target_int5; } set { type_of_target_int5 = value; } }
+        public bool IsAge_of_trackUpdate_higher_than_thold { get { return age_of_trackUpdate_higher_than_thold; } set { age_of_trackUpdate_higher_than_thold = value; } }
+        public bool IsAge_of_PSR_higher_than_thold { get { return age_of_PSR_higher_than_thold; } set { age_of_PSR_higher_than_thold = value; } }
+        public bool IsAge_of_SSR_higher_than_thold { get { return age_of_SSR_higher_than_thold; } set { age_of_SSR_higher_than_thold = value; } }
+        public bool IsAge_of_ModeS_higher_than_thold { get { return age_of_ModeS_higher_than_thold; } set { age_of_ModeS_higher_than_thold = value; } }
+        public bool IsAge_of_ADSB_higher_than_thold { get { return age_of_ADSB_higher_than_thold; } set { age_of_ADSB_higher_than_thold = value; } }
+        public bool IsSpecial_used_code { get { return special_used_code; } set { special_used_code = value; } }
+        public bool IsAssigned_modeA_code_conflict { get { return assigned_modeA_code_conflict; } set { assigned_modeA_code_conflict = value; } }
+        public string Surveillance_data_status { get { return surveillance_data_status; } set { surveillance_data_status = value; } }
+        public string Emergency_status_indication { get { return emergency_status_indication; } set { emergency_status_indication = value; } }
+        public bool IsPotential_false_track_indication { get { return potential_false_track_indication; } set { potential_false_track_indication = value; } }
+        public bool IsTrack_created_FPLdata { get { return track_created_FPLdata; } set { track_created_FPLdata = value; } }
         public bool IsDuplicate_3Acode { get { return duplicate_3Acode; } set { duplicate_3Acode = value; } }
         public bool IsDuplicate_flight_plan { get { return duplicate_flight_plan; } set { duplicate_flight_plan = value; } }
         public bool IsDuplicate_fplan_for_manual_corr { get { return duplicate_fplan_for_manual_corr; } set { duplicate_fplan_for_manual_corr = value; } }
@@ -211,6 +305,10 @@ namespace PGTA
         public double Adsb_uat_age { get { return adsb_uat_age; } set { adsb_uat_age = value; } }
         public double Loop_age { get { return loop_age; } set { loop_age = value; } }
         public double Multilater_age { get { return multilater_age; } set { multilater_age = value; } }
+        public string Status_movement_trans { get { return status_movement_trans; } set { status_movement_trans = value; } }
+        public string Status_movement_long { get { return status_movement_long; } set { status_movement_long = value; } }
+        public string Status_movement_vert { get { return status_movement_vert; } set { status_movement_vert = value; } }
+        public bool IsAltitudeDiscrepacy { get { return altitude_discrepacy; } set { altitude_discrepacy = value; } }
         public double Meas_fl_age { get { return meas_fl_age; } set { meas_fl_age = value; } }
         public double Mode1_age { get { return mode1_age; } set { mode1_age = value; } }
         public double Mode2_age { get { return mode2_age; } set { mode2_age = value; } }
@@ -246,23 +344,6 @@ namespace PGTA
 
 
 
-        public bool IsAge_of_trackUpdate_higher_than_thold { get { return age_of_trackUpdate_higher_than_thold; } set { age_of_trackUpdate_higher_than_thold = value; } }
-        public bool IsAge_of_PSR_higher_than_thold { get { return age_of_PSR_higher_than_thold; } set { age_of_PSR_higher_than_thold = value; } }
-        public bool IsAge_of_SSR_higher_than_thold { get { return age_of_SSR_higher_than_thold; } set { age_of_SSR_higher_than_thold = value; } }
-        public bool IsAge_of_ModeS_higher_than_thold { get { return age_of_ModeS_higher_than_thold; } set { age_of_ModeS_higher_than_thold = value; } }
-        public bool IsAge_of_ADSB_higher_than_thold { get { return age_of_ADSB_higher_than_thold; } set { age_of_ADSB_higher_than_thold = value; } }
-        public bool IsSpecial_used_code { get { return special_used_code; } set { special_used_code = value; } }
-        public bool IsAssigned_modeA_code_conflict { get { return assigned_modeA_code_conflict; } set { assigned_modeA_code_conflict = value; } }
-        public string Surveillance_data_status { get { return surveillance_data_status; } set { surveillance_data_status = value; } }
-        public string Emergency_status_indication { get { return emergency_status_indication; } set { emergency_status_indication = value; } }
-        public bool IsPotential_false_track_indication { get { return potential_false_track_indication; } set { potential_false_track_indication = value; } }
-        public bool IsTrack_created_FPLdata { get { return track_created_FPLdata; } set { track_created_FPLdata = value; } }
-
-
-        public string Status_movement_trans { get { return status_movement_trans; } set { status_movement_trans = value; } }
-        public string Status_movement_long { get { return status_movement_long; } set { status_movement_long = value; } }
-        public string Status_movement_vert { get { return status_movement_vert; } set { status_movement_vert = value; } }
-        public bool IsAltitudeDiscrepacy { get { return altitude_discrepacy; } set { altitude_discrepacy = value; } }
 
 
    
