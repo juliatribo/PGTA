@@ -8,7 +8,7 @@ namespace PGTA
 {
     internal class I062_120
     {
-        int octal_mode2A;
+        int code_mode2A;
         public I062_120(int b, int b1)
         {
 
@@ -31,20 +31,20 @@ namespace PGTA
             string octal_mode_str_B = Convert.ToString(bin_subtrack_B, 8);
 
             string subtrack3A_C = track3A.Substring(10, 3);
-            int bin_subtrack3A_C = Convert.ToInt32(subtrack3A_C, 2);
-            string octal_mode3A_str_C = Convert.ToString(bin_subtrack3A_C, 8);
+            int bin_subtrack_C = Convert.ToInt32(subtrack3A_C, 2);
+            string octal_mode_str_C = Convert.ToString(bin_subtrack_C, 8);
 
             string subtrack_D = track3A.Substring(13, 3);
             int bin_subtrack_D = Convert.ToInt32(subtrack_D, 2);
             string octal_mode_str_D = Convert.ToString(bin_subtrack_D, 8);
 
-            string octal_mode3A_str = octal_mode_str_A + octal_mode_str_B + octal_mode3A_str_C + octal_mode_str_D;
-            this.octal_mode2A = Convert.ToInt32(octal_mode3A_str);
+            string octal_mode3A_str = octal_mode_str_A + octal_mode_str_B + octal_mode_str_C + octal_mode_str_D;
+            this.code_mode2A = Convert.ToInt32(octal_mode3A_str);
         }
 
         public int getOctal2A()
         {
-            return this.octal_mode2A;
+            return this.code_mode2A;
         }
 
     }

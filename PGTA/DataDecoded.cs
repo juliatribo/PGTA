@@ -133,6 +133,86 @@ namespace PGTA
         double rate_climb_descent;
         string vehicle;
         int octal_mode2A;
+        bool tag;
+        bool csn;
+        bool ifi;
+        bool fct;
+        bool tac;
+        bool wtc;
+        bool dep;
+        bool dst;
+        bool rds;
+        bool cfl;
+        bool ctl;
+        bool tod;
+        bool ast;
+        bool sts;
+        bool std;
+        bool sta;
+        bool pem;
+        bool pec;
+
+        bool sum;
+        bool pmn;
+        bool pos;
+        bool ga;
+        bool em1;
+        bool tos;
+        bool xp;
+
+        bool m5;
+        bool id;
+        bool da;
+        bool m1;
+        bool m2;
+        bool m3;
+        bool mc;
+        bool x_100;
+
+        int pin;
+        int nat;
+        int mis;
+
+        double lat_M5;
+        double lon_M5;
+
+        string res_AltitudeGNSS;
+        int altitudeGNSS;
+
+        int code_M1;
+        double tos_value;
+        bool x5;
+        bool xc;
+        bool x3;
+        bool x2;
+        bool x1;
+
+        bool sid;
+        bool pos_340;
+        bool hei;
+        bool mdc;
+        bool mda;
+        bool typ;
+
+        double rho;
+        double theta;
+
+        int height;
+        bool validated_code_340;
+        bool garbled_code_340;
+        double last_mesured_modeC_code;
+
+        bool v_mda;
+        bool g_mda;
+        bool l_mda;
+        int codeM3A;
+
+        string typ_val;
+        bool sim;
+        bool rab;
+        bool tst;
+
+
 
         public DataDecoded()
         {
@@ -273,6 +353,91 @@ namespace PGTA
         public double Rate { get { return rate_climb_descent; } set { rate_climb_descent = value; } }
         public string Vehicle { get { return vehicle; } set { vehicle = value; } }
         public int Octal_mode2A { get { return octal_mode2A; } set { octal_mode2A = value; } }
+        
+        public bool TAG { get { return tag; } set { tag = value; } }
+        public bool CSN { get { return csn; } set { csn = value; } }
 
+        public bool IFI { get { return ifi; } set { ifi = value; } }
+        public bool FCT { get { return fct; } set { fct = value; } }
+        public bool TAC { get { return tac; } set { tac = value; } }
+        public bool WTC { get { return wtc; } set { wtc = value; } }
+
+        public bool DEP { get { return dep; } set { dep = value; } }
+        public bool DST { get { return dst; } set { dst = value; } }
+        public bool RDS { get { return rds; } set { rds = value; } }
+        public bool CFL { get { return cfl; } set { cfl = value; } }
+
+        public bool CTL { get { return ctl; } set { ctl = value; } }
+        public bool TOD { get { return tod; } set { tod = value; } }
+        public bool AST { get { return ast; } set { ast = value; } }
+        public bool STS { get { return sts; } set { sts = value; } }
+
+        public bool STD { get { return std; } set { std = value; } }
+        public bool STA { get { return sta; } set { sta = value; } }
+        public bool PEM { get { return pem; } set { pem = value; } }
+        public bool PEC { get { return pec; } set { pec = value; } }
+
+        public bool SUM { get { return sum; } set { sum = value; } }
+        public bool PMN { get { return pmn; } set { pmn = value; } }
+        public bool POS { get { return pos; } set { pos = value; } }
+
+        public bool GA { get { return ga; } set { ga = value; } }
+        public bool EM1 { get { return em1; } set { em1 = value; } }
+        public bool TOS { get { return tos; } set { tos = value; } }
+        public bool XP { get { return xp; } set { xp = value; } }
+
+        public bool M5 { get { return m5; } set { m5 = value; } }
+        public bool ID { get { return id; } set { id = value; } }
+        public bool DA { get { return da; } set { da = value; } }
+        public bool M1 { get { return m1; } set { m1 = value; } }
+        public bool M2 { get { return m2; } set { m2 = value; } }
+        public bool M3 { get { return m3; } set { m3 = value; } }
+        public bool MC { get { return mc; } set { mc = value; } }
+        public bool X_110 { get { return x_100; } set { x_100 = value; } }
+
+        public int PIN { get { return pin; } set { pin = value; } }
+        public int NAT { get { return nat; } set { nat = value; } }
+        public int MIS { get { return mis; } set { mis = value; } }
+
+        public double LONG_M5 { get { return lat_M5; } set { lat_M5 = value; } }
+        public double LAT_M5 { get { return lon_M5; } set { lon_M5 = value; } }
+
+        public string RES_GNSS { get { return res_AltitudeGNSS; } set { res_AltitudeGNSS = value; } }
+        public int ALT_GNSS { get { return altitudeGNSS; } set { altitudeGNSS = value; } }
+
+        public int CODE_M1 { get { return code_M1; } set { code_M1 = value; } }
+
+        public double TOS_VAL { get { return tos_value; } set { tos_value = value; } }
+        public bool X5 { get { return x5; } set { x5 = value; } }
+        public bool XC { get { return xc; } set { xc = value; } }
+        public bool X3 { get { return x3; } set { x3 = value; } }
+        public bool X2 { get { return x2; } set { x2 = value; } }
+        public bool X1 { get { return x1; } set { x1 = value; } }
+
+        public bool SID { get { return sid; } set { sid = value; } }
+        public bool POS_340 { get { return pos_340; } set { pos_340 = value; } }
+        public bool HEI { get { return hei; } set { hei = value; } }
+        public bool MDC { get { return mdc; } set { mdc = value; } }
+        public bool MDA { get { return mda; } set { mda = value; } }
+        public bool TYP { get { return typ; } set { typ = value; } }
+
+        public double RHO { get { return rho; } set { rho = value; } }
+        public double THETA { get { return theta; } set { theta = value; } }
+        public int HEIGHT { get { return height; } set { height = value; } }
+
+        public bool VC { get { return validated_code_340; } set { validated_code_340 = value; } }
+        public bool GC { get { return garbled_code_340; } set { garbled_code_340 = value; } }
+        public double Code_Mc { get { return last_mesured_modeC_code; } set { last_mesured_modeC_code = value; } }
+
+       
+        public bool V_mda { get { return v_mda; } set { v_mda = value; } }
+        public bool G_mda { get { return g_mda; } set { g_mda = value; } }
+        public bool L_mda { get { return l_mda; } set { l_mda = value; } }
+        public int CodeM3A { get { return codeM3A; } set { codeM3A = value; } }
+ 
+        public bool TST { get { return tst; } set { tst = value; } }
+        public bool RAB { get { return rab; } set { rab = value; } }
+        public bool SIM { get { return sim; } set { sim = value; } }
+        public string Typ_val { get { return typ_val; } set { typ_val = value; } }
     }
 }
