@@ -36,6 +36,7 @@ namespace PGTA
             int k = 0;
             while (n < buffer.Length)
             {
+
                 DataDecoded data = new DataDecoded();
                 int len;
                 switch (((sbyte)buffer[n]))
@@ -637,61 +638,102 @@ namespace PGTA
                                         break;
 
                                     case 21: //I062/390 Flight Plan Related Data (1+)
-                                        I062_390 c21 = new I062_390(buffer[position], buffer[position + 1], buffer[position + 2], buffer[position + 3]);
-                                        string total_data = c21.GetTotalData();
+                                        string total_data = "";
+                                        bool fx_data = true;
+                                        Basic_functions bf = new Basic_functions();
+                                        int l;//length frns counter
+                                        for (l = 0; fx_data && l < 3; l++)
+                                        {
+                                            fx_data = false;
+                                            string oct = Convert.ToString(buffer[position + l], 2);
+                                            oct = bf.padding(oct);
+                                            if (oct[7].Equals("1"))
+                                            {
+                                                fx_data = true;
+                                            }
+                                        }
+                                        position = position + l;
                                         for (int i = 0; i < total_data.Length; i++)
                                         {
                                             if (total_data[i].Equals("1"))
                                             {
                                                 switch (i)
                                                 {
-                                                    case 1:
+                                                    case 0: //FPPS Identification Tag
+                                                        data.TAG = true;
+                                                        position = position + 2;
                                                         break;
-                                                    case 2:
+                                                    case 1: //Callsign
+                                                        data.CSN = true;
+                                                        position = position + 7;
                                                         break;
-                                                    case 3:
+                                                    case 2: //IFPS_FLIGHT_ID
+                                                        data.IFI = true;
+                                                        position = position + 4;
                                                         break;
-                                                    case 4:
+                                                    case 3: //Flight Category 
+                                                        data.FCT = true;
+                                                        position = position + 1;
                                                         break;
-                                                    case 5:
+                                                    case 4: //Type of Aircraft 
+                                                        data.TAC = true;
+                                                        position = position + 4;
                                                         break;
-                                                    case 6:
+                                                    case 5: //Wake Turbulence Category 
+                                                        data.WTC = true;
+                                                        position = position + 1;
                                                         break;
-                                                    case 7:
+                                                    case 6: //Departure Airport 
+                                                        data.DEP = true;
+                                                        position = position + 4;
                                                         break;
-                                                    case 8:
+                                                    case 7: //FX
                                                         break;
-                                                    case 9:
+                                                    case 8: //Destination Airport 
+                                                        data.DST = true;
+                                                        position = position + 4;
                                                         break;
-                                                    case 10:
+                                                    case 9: //Runway Designation
+                                                        data.RDS = true;
+                                                        position = position + 3;
                                                         break;
-                                                    case 11:
+                                                    case 10: //Current Cleared Flight Level 
+                                                        data.CFL = true;
+                                                        position = position + 2;
                                                         break;
-                                                    case 12:
+                                                    case 11: //Current Control Position
+                                                        data.CTL = true;
+                                                        position = position + 2;
                                                         break;
-                                                    case 13:
+                                                    case 12: //Time of Departure / Arrival 
+                                                        data.TOD = true;
+                                                        position = position + 5;
                                                         break;
-                                                    case 14:
+                                                    case 13: //Aircraft Stand 
+                                                        data.AST = true;
+                                                        position = position + 6;
                                                         break;
-                                                    case 15:
+                                                    case 14: //Stand Status
+                                                        data.STS = true;
+                                                        position = position + 1;
                                                         break;
-                                                    case 16:
+                                                    case 15: //FX
                                                         break;
-                                                    case 17:
+                                                    case 16: //Standard Instrument Departure
+                                                        data.STD = true;
+                                                        position = position + 7;
                                                         break;
-                                                    case 18:
+                                                    case 17: //STandard Instrument ARrival
+                                                        data.STD = true;
+                                                        position = position + 7;
                                                         break;
-                                                    case 19:
+                                                    case 18: //Pre-emergency Mode 3/A code 
+                                                        data.PEM = true;
+                                                        position = position + 2;
                                                         break;
-                                                    case 20:
-                                                        break;
-                                                    case 21:
-                                                        break;
-                                                    case 22:
-                                                        break;
-                                                    case 23:
-                                                        break;
-                                                    case 24:
+                                                    case 19: // Pre-emergency Callsign 
+                                                        data.PEC = true;
+                                                        position = position + 7;
                                                         break;
                                                 }
                                             }
@@ -708,8 +750,80 @@ namespace PGTA
                                         position = position + 1;
                                         break;
 
-                                    case 24://I062/110 Mode 5 Data reports & Extended Mode 1 Code 
-                           
+                                    case 24://I062/110 Mode 5 Data reports & Extended Mode 1 Code (1+) ???????????????????
+                                        string octeto = Convert.ToString(buffer[position], 2);
+                                        position = position + 1;
+                                        data.TOS_VAL = 0;
+                                        for (int i = 0; i < octeto.Length; i++)
+                                        {
+                                            if (octeto[i].Equals("1"))
+                                            {
+                                                switch (i)
+                                                {
+                                                    case 0: //Mode 5 Summary
+                                                        data.SUM = true;
+                                                        I062_110_SUM c24_0 = new I062_110_SUM(buffer[position]);
+                                                        data.M5 = c24_0.getM5();
+                                                        data.ID = c24_0.getID();
+                                                        data.DA = c24_0.getDA();
+                                                        data.M1 = c24_0.getM1();
+                                                        data.M2 = c24_0.getM2();
+                                                        data.M3 = c24_0.getM3();
+                                                        data.MC = c24_0.getMC();
+                                                        data.X_110 = c24_0.getX_110();
+                                                        position = position + 1;
+                                                        break;
+
+                                                    case 1: //Mode 5 PIN/ National
+                                                        data.PMN = true;
+                                                        I062_110_PMN c24_1 = new I062_110_PMN(buffer[position], buffer[position+1], buffer[position+2], buffer[position + 3]);
+                                                        data.PIN = c24_1.getPIN();
+                                                        data.NAT = c24_1.getNAT();
+                                                        data.MIS = c24_1.getMIS();
+                                                        position = position + 4;
+                                                        break;
+                                                    case 2: //Mode 5 Reported Position
+                                                        data.POS = true;
+                                                        I062_110_POS c24_2 = new I062_110_POS(buffer[position], buffer[position + 1], buffer[position + 2], buffer[position + 3], buffer[position + 4], buffer[position + 5]);
+                                                        data.LONG_M5 = c24_2.getLong();
+                                                        data.LAT_M5 = c24_2.getLat();
+                                                        position = position + 6;
+                                                        break;
+                                                    case 3: //Mode 5 GNSS-derived Altitude
+                                                        data.GA = true;
+                                                        I062_110_GA c24_3 = new I062_110_GA(buffer[position], buffer[position + 1]);
+                                                        data.ALT_GNSS = c24_3.getAltitudeGNSS();
+                                                        data.RES_GNSS = c24_3.getRES();
+                                                        position = position + 2;
+                                                        break;
+                                                    case 4: //Extended Mode 1 Code in Octal
+                                                        data.EM1 = true;
+                                                        I062_110_EM1 c24_4 = new I062_110_EM1(buffer[position], buffer[position + 1]);
+                                                        data.CODE_M1 = c24_4.getCodeM1();
+                                                        position = position + 2;
+                                                        break;
+                                                    case 5: //Time Offset for POS and GA.
+                                                        data.TOS = true;
+                                                        I062_110_TOS c24_5 = new I062_110_TOS(buffer[position]);
+                                                        data.TOS_VAL = c24_5.getTOS();
+                                                        position = position + 1;
+                                                        break;
+                                                    case 6: //Pulse Presence
+                                                        data.XP = true;
+                                                        I062_110_XP c24_6 = new I062_110_XP(buffer[position]);
+                                                        data.X5 = c24_6.getX5();
+                                                        data.XC = c24_6.getXC();
+                                                        data.X3 = c24_6.getX3();
+                                                        data.X2 = c24_6.getX2();
+                                                        data.X1 = c24_6.getX1();
+                                                        position = position + 1;
+                                                        break;
+                                                    case 7: //FX
+                                                        break;
+
+                                                }
+                                            }
+                                        }
                                         break;
 
                                     case 25: //I062/120 Track Mode 2 Code 
@@ -727,6 +841,76 @@ namespace PGTA
                                         break;
 
                                     case 28: //I062/340 Measured Information (1+)
+                                        string oct1 = Convert.ToString(buffer[position], 2);
+                                        position = position + 1;
+                                        for (int i = 0; i < oct1.Length; i++)
+                                        {
+                                            if (oct1[i].Equals("1"))
+                                            {
+                                                switch (i)
+                                                {
+                                                    case 0: //Sensor Identification  ¿tengo que poner los datos en los que ya habia o nueva variable?
+                                                        data.SID = true;
+                                                        I062_340_SID c28_0 = new I062_340_SID(buffer[position], buffer[position + 1]);
+                                                        data.Sac = c28_0.getSAC();
+                                                        data.Sic = c28_0.getSIC();
+                                                        position = position + 2;
+                                                        break;
+
+                                                    case 1: //Measured Position 
+                                                        data.POS_340 = true;
+                                                        I062_340_POS c28_1 = new I062_340_POS(buffer[position], buffer[position + 1], buffer[position + 2], buffer[position + 3]);
+                                                        data.RHO = c28_1.getRHO();
+                                                        data.THETA = c28_1.getTHETA();
+                                                        position = position + 4;
+                                                        break;
+
+                                                    case 2: //Measured 3-D Height
+                                                        data.HEI = true;
+                                                        I062_340_HEI c28_2 = new I062_340_HEI(buffer[position], buffer[position + 1]);
+                                                        data.HEIGHT = c28_2.getHeight();
+                                                        position = position + 2;
+                                                        break;
+
+                                                    case 3: //Last Measured Mode C code
+                                                        data.MDC = true;
+                                                        I062_340_MDC c28_3 = new I062_340_MDC(buffer[position], buffer[position + 1]);
+                                                        data.VC = c28_3.getV();
+                                                        data.GC = c28_3.getG();
+                                                        data.Code_Mc = c28_3.getCodeModeC();
+                                                        position = position + 2;
+                                                        break;
+
+                                                    case 4: //Last Measured Mode 3/A code  ¿¿¿¿¿¿¿¿hace ref al de la cat 060????????????
+                                                        data.MDA = true;
+                                                        I062_340_MDA c28_4 = new I062_340_MDA(buffer[position], buffer[position + 1]);
+                                                        data.V_mda = c28_4.getV();
+                                                        data.G_mda = c28_4.getG();
+                                                        data.L_mda = c28_4.getL();
+                                                        data.CodeM3A = c28_4.getOctal3A();
+                                                        position = position + 2;
+                                                        break;
+
+                                                    case 5: //Report Type
+                                                        data.TYP = true;
+                                                        I062_340_TYP c28_5 = new I062_340_TYP(buffer[position]);
+                                                        data.TST = c28_5.getTST();
+                                                        data.RAB = c28_5.getRAB();
+                                                        data.SIM = c28_5.getSIM();
+                                                        data.Typ_val = c28_5.getTYP();
+                                                        position = position + 1;
+                                                        break;
+
+                                                    case 6: //0
+                                                        break;
+
+                                                    case 7: //FX
+
+                                                        break;
+
+                                                }
+                                            }
+                                        }
                                         break;
 
                                     case 29:
