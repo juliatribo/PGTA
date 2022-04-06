@@ -180,9 +180,9 @@ namespace PGTA
                                                         position = position + 2;
                                                         break;
 
-                                                    case 4://IAS
-                                                        data.Ias = c11.getIas(buffer[position], buffer[position + 1]);
-                                                        data.IsMach = c11.isMach();
+                                                    case 4://IAS/Mach
+                                                        data.IsMach = c11.isMach(buffer[position]);
+                                                        data.Ias_or_Mach = c11.getIas_or_mach(buffer[position], buffer[position + 1]);
                                                         position = position + 2;
                                                         break;
 
@@ -194,51 +194,92 @@ namespace PGTA
                                                     case 6://SAL
                                                         data.IsSas = c11.IsSas(buffer[position]);
                                                         data.Source = c11.getSource(buffer[position]);
-                                                        data.Fms_altitude_selected = c11.getAltitude(buffer[position], buffer[position + 1]);
+                                                        data.Fms_altitude = c11.getAltitude(buffer[position], buffer[position + 1]);
                                                         position = position + 2;
                                                         break;
 
                                                     case 7://FSS
-                                                           // bool
-                                                        data.Fms_altitude_selected = c11.getAltitude(buffer[position], buffer[position + 1]);
+                                                        data.IsManageVertical = c11.IsManageVertical(buffer[position]);
+                                                        data.IsAltitudeHold = c11.IsAltHold(buffer[position]);
+                                                        data.IsApproachMode = c11.IsApprMode(buffer[position]);
+                                                        data.Fms_final_state_altitude = c11.getFinalStateAlt(buffer[position], buffer[position + 1]);
                                                         position = position + 2;
                                                         break;
 
                                                     case 8://TIS
+                                                        data.isTrajIntentAviable = c11.isTrajIntentAviable(buffer[position]);
+                                                        data.isTrajIntentValid = c11.isTrajIntentValid(buffer[position]);
+                                                        position++;
+                                                        if (c11.is8fx(buffer[position]))
+                                                        {
+                                                            data.Rep_traj_int_fact = c11.getTrajIntRepFactor(buffer[position]);
+                                                            data.isTcp_available = c11.isTcpAviable(buffer[position + 1]);
+                                                            data.isTcp_compilance = c11.isTcpCompliance(buffer[position + 1]);
+                                                            data.Traj_chang_point = c11.getTraj_chang_point(buffer[position + 1]);
+                                                            data.Alt_traj_itent = c11.getTrajIntAltitude(buffer[position + 2], buffer[position + 3]);
+                                                            data.Lat_traj_int_wgs84 = c11.getLatWGS84(buffer[position + 4], buffer[position + 5], buffer[position + 6]);
+                                                            data.Long_traj_int_wgs84 = c11.getLongWGS84(buffer[position + 7], buffer[position + 8], buffer[position + 9]);
+                                                            data.Point_type = c11.getPointType(buffer[position + 10]);
+                                                            data.Td = c11.getTd(buffer[position + 10]);
+                                                            data.isTurn_radius_available = c11.isTurnRdiusAvailable(buffer[position + 10]);
+                                                            data.isTov_available = c11.isTOVsAvailable(buffer[position + 10]);
+                                                            data.Time_over_time = c11.getTimeOverPoint(buffer[position + 11], buffer[position + 12], buffer[position + 13]);
+                                                            data.Tcp_trun_radius = c11.getTcpTurnRadius(buffer[position + 14], buffer[position + 15]);
 
+                                                        }
+                                                        position = position + 16;
                                                         break;
+//////////////////////////////////////////////////////////////preguntar si el cas 9 es posa dins del 8
+                                                   // case 9:
 
-                                                    case 9:
+                                                     //   break;
 
-                                                        break;
-
-                                                    case 10:
-
+                                                    case 10://Communications/ACAS Capability and Flight Status reported by Mode-S 
+                                                        data.Comm_capability_transpond = c11.getComm_capability_transponder(buffer[position]);
+                                                        data.Flight_status = c11.getFlightStatus(buffer[position]);
+                                                        data.isSpecific_capability = c11.isSpecificServiceCapability(buffer[position + 1]);
+                                                        data.Alt_capability = c11.getAltitudeCapability(buffer[position + 1]);
+                                                        data.isAircraft_id_capability = c11.isIdCapability(buffer[position + 1]);
+                                                        position = position + 2;
                                                         break;
 
                                                     case 11:
-
+                                                        data.Acas_adsb = c11.getAcas_adsb(buffer[position]);
+                                                        data.Mult_nav_aids_adsb = c11.getMultNav_adsb(buffer[position]);
+                                                        data.Diff_correlation_adsb = c11.getDiffCorrection_adsb(buffer[position]);
+                                                        data.isTranpond_ground_bit_set_adsb = c11.isTranspondGroundBitSet_adsb(buffer[position]);
+                                                        data.Flight_stat_adsb = c11.getFlightStatus_adsb(buffer[position + 1]);
+                                                        position = position + 2;
                                                         break;
 
                                                     case 12:
-
+                                                        position = position + 7;
                                                         break;
 
                                                     case 13:
-
+                                                        data.Barom_vert_rate = c11.getBaromVertRate(buffer[position], buffer[position + 1]);
+                                                        position = position + 2;
                                                         break;
 
                                                     case 14:
-
+                                                        data.Geom_vert_rate = c11.getGeomVertRate(buffer[position], buffer[position + 1]);
+                                                        position = position + 2;
                                                         break;
 
                                                     case 15:
-
+                                                        data.Roll_angle = c11.getRollAnle(buffer[position], buffer[position + 1]);
+                                                        position = position + 2;
                                                         break;
 
                                                     case 16:
+                                                        data.Turn_indicator = c11.getTurnIndicator(buffer[position]);
+                                                        data.Rate_of_turn = c11.getRateOfTurn(buffer[position + 1]);
+                                                        position = position + 2;
                                                         break;
+
                                                     case 17:
+                                                        data.Track_angle = c11.getTrackAnle(buffer[position], buffer[position + 1]);
+                                                        position = position + 2;
                                                         break;
 
                                                     case 18://GS
@@ -247,30 +288,75 @@ namespace PGTA
                                                         break;
 
                                                     case 19:
+                                                        data.Vel_uncert_cat = buffer[position];
+                                                        position++;
                                                         break;
+
                                                     case 20:
+                                                        if (c11.isWindSpeedValid(buffer[position]))
+                                                        {
+                                                            data.Wind_speed = c11.getWindSpeed(buffer[position + 1], buffer[position + 2]);
+                                                        }
+                                                        if (c11.isWindDirectionValid(buffer[position]))
+                                                        {
+                                                            data.Wind_direction = c11.getWindDir(buffer[position + 3], buffer[position + 4]);
+                                                        }
+                                                        if (c11.isTempValid(buffer[position]))
+                                                        {
+                                                            data.Temperature = c11.getTemp(buffer[position + 5], buffer[position + 6]);
+                                                        }
+                                                        if (c11.isTurbValid(buffer[position]))
+                                                        {
+                                                            data.Turbulence = c11.getTurbulence(buffer[position + 7]);
+                                                        }/////////////////////////////////////////真真真真真真真真 sobren bits?
+                                                        position = position + 8;
                                                         break;
+
                                                     case 21:
+                                                        data.Emitter_cat = c11.getEcat(buffer[position]);
+                                                        position++;
                                                         break;
+
                                                     case 22:
+                                                        data.Aircraft_derived_latWGS84 = c11.getLatWGS84(buffer[position], buffer[position + 1], buffer[position + 2]);
+                                                        data.Aircraft_derived_longWGS84 = c11.getLongWGS84(buffer[position + 3], buffer[position + 4], buffer[position + 5]);
+                                                        //////////////////////////////////????????? pag 108
+                                                        position = position + 6;
                                                         break;
+
                                                     case 23:
+                                                        data.Geom_alt = c11.getGeomAltitude(buffer[position], buffer[position + 1]);
+                                                        position = position + 2;
                                                         break;
+
                                                     case 24:
+                                                        data.Position_uncert = c11.getPosUncert(buffer[position]);
+                                                        position++;
                                                         break;
+
                                                     case 25:
+                                                        //NO
+                                                        position = position + 9;
                                                         break;
+
                                                     case 26:
+                                                        data.Ias = c11.getIas(buffer[position], buffer[position + 1]);
+                                                        position = position + 2;
                                                         break;
+
                                                     case 27:
+                                                        data.Mach = c11.getMach(buffer[position], buffer[position + 1]);
+                                                        position = position + 2;
                                                         break;
+
                                                     case 28:
+                                                        data.Barom_press_sett = c11.getBaromPressSett(buffer[position], buffer[position + 1]);
+                                                        position = position + 2;
                                                         break;
 
                                                 }
                                             }
                                         }
-
                                         break;
 
                                     case 12://I062/040 Track Number
