@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PGTA
 {
-    internal class DataDecoded
+    public class DataDecoded
     {
         string categoria;
         int sic;
@@ -256,6 +256,7 @@ namespace PGTA
         bool rab;
         bool tst;
 
+        bool expanded;
 
 
         public DataDecoded()
@@ -520,5 +521,6 @@ namespace PGTA
         public bool RAB { get { return rab; } set { rab = value; } }
         public bool SIM { get { return sim; } set { sim = value; } }
         public string Typ_val { get { return typ_val; } set { typ_val = value; } }
+        public bool Expanded { get { return expanded; } set { expanded = value; } }
     }
 }

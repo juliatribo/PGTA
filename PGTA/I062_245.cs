@@ -34,7 +34,7 @@ namespace PGTA
             string sti = sti_ocet.Substring(0, 2);
             if (sti.Equals("00"))
             {
-                this.target_id_status = "Callsign or registrationdownlinked from target";
+                this.target_id_status = "Callsign or registration downlinked from target";
             }
             else if (sti.Equals("01"))
             {
