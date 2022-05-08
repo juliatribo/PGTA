@@ -25,7 +25,7 @@ namespace PGTA
 
             for (int i = 0; i < suboct.Length; i++)
             {
-                if (suboct[i].Equals("1"))
+                if (suboct[i].Equals('1'))
                 {
                     switch (i)
                     {
@@ -44,7 +44,7 @@ namespace PGTA
                         case 4: //X1
                             X1 = true;
                             break;
-                        
+
                     }
                 }
             }
@@ -69,7 +69,7 @@ namespace PGTA
         {
             return this.X1;
         }
-        
+
     }
 }
 

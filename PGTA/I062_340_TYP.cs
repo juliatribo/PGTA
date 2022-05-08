@@ -26,10 +26,12 @@ namespace PGTA
             {
                 this.typ = "No detection";
             }
-            else if(typ_val.Equals("001")){
+            else if (typ_val.Equals("001"))
+            {
                 this.typ = "Single PSR detection";
             }
-            else if(typ_val.Equals("010")){
+            else if (typ_val.Equals("010"))
+            {
                 this.typ = "Single SSR detection";
             }
             else if (typ_val.Equals("011"))
@@ -54,7 +56,7 @@ namespace PGTA
             }
 
             char sim = oct1[3];
-            if (sim.Equals("0"))
+            if (sim.Equals('0'))
             {
                 this.sim = false; //Actual target report
             }
@@ -63,7 +65,7 @@ namespace PGTA
                 this.sim = true; //Simulated target report
             }
             char rab = oct1[4];
-            if (rab.Equals("0"))
+            if (rab.Equals('0'))
             {
                 this.rab = false; //Report from target transponder
             }
@@ -72,7 +74,7 @@ namespace PGTA
                 this.rab = true; //Report from field monitor
             }
             char tst = oct1[5];
-            if (tst.Equals("0"))
+            if (tst.Equals('0'))
             {
                 this.tst = false; //Real target report
             }

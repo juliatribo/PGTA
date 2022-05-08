@@ -23,7 +23,7 @@ namespace PGTA
             fl2 = bf.padding(fl2);
 
             string fl_str = fl1 + fl2;
-            if (fl_str[0].ToString().Equals("1"))
+            if (fl_str[0].ToString().Equals('1'))
             {
                 fl_str = bf.complement2(fl_str);
                 this.fl = Convert.ToDouble(Convert.ToInt32(fl_str, 2)) * -0.25;
@@ -32,7 +32,7 @@ namespace PGTA
             {
                 this.fl = Convert.ToDouble(Convert.ToInt32(fl_str, 2)) * 0.25;
             }
-            
+
         }
 
         public double getFl()

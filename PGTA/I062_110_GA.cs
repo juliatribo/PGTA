@@ -24,7 +24,7 @@ namespace PGTA
             string oct_str = oct1 + oct2;
 
             char res = oct_str[1];
-            if (res.Equals("0"))
+            if (res.Equals('0'))
             {
                 this.RES = "resolution 100ft increments";
             }
@@ -33,7 +33,7 @@ namespace PGTA
                 this.RES = "resolution 25 ft increments";
             }
 
-            string altitude  = oct_str.Substring(2, 14);
+            string altitude = oct_str.Substring(2, 14);
             this.altitude_GNSS = Convert.ToInt32(altitude, 2);
 
         }

@@ -255,6 +255,8 @@ namespace PGTA
         bool sim;
         bool rab;
         bool tst;
+        int sic2;
+        int sac2;
 
         bool expanded;
 
@@ -521,6 +523,9 @@ namespace PGTA
         public bool RAB { get { return rab; } set { rab = value; } }
         public bool SIM { get { return sim; } set { sim = value; } }
         public string Typ_val { get { return typ_val; } set { typ_val = value; } }
+        public int SIC2 { get { return sic2; } set { sic2 = value; } }
+        public int SAC2 { get { return sac2; } set { sac2 = value; } }
+
         public bool Expanded { get { return expanded; } set { expanded = value; } }
     }
 }

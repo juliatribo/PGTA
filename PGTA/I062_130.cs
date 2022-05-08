@@ -23,7 +23,7 @@ namespace PGTA
             tga2 = bf.padding(tga2);
 
             string tga_str = tga1 + tga2;
-            if (tga_str[0].ToString().Equals("1"))
+            if (tga_str[0].ToString().Equals('1'))
             {
                 tga_str = bf.complement2(tga_str);
                 this.tga = Convert.ToDouble(Convert.ToInt32(tga_str, 2)) * -6.25;

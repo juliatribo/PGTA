@@ -9,7 +9,7 @@ namespace PGTA
     internal class I062_110_POS
     {
         double lat;
-        double lon; 
+        double lon;
         public I062_110_POS(int b, int b1, int b2, int b3, int b4, int b5)
         {
 
@@ -30,10 +30,10 @@ namespace PGTA
             oct6 = bf.padding(oct6);
 
             string lat_str = oct1 + oct2 + oct3;
-            if (lat_str[0].ToString().Equals("1"))
+            if (lat_str[0].ToString().Equals('1'))
             {
                 lat_str = bf.complement2(lat_str);
-                this.lat = Convert.ToDouble(Convert.ToInt32(lat_str, 2)) * (180/Math.Pow(2,23));
+                this.lat = Convert.ToDouble(Convert.ToInt32(lat_str, 2)) * (180 / Math.Pow(2, 23));
             }
             else
             {
@@ -41,7 +41,7 @@ namespace PGTA
             }
 
             string long_str = oct4 + oct5 + oct6;
-            if (long_str[0].ToString().Equals("1"))
+            if (long_str[0].ToString().Equals('1'))
             {
                 long_str = bf.complement2(long_str);
                 this.lon = Convert.ToDouble(Convert.ToInt32(long_str, 2)) * (180 / Math.Pow(2, 23));

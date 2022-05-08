@@ -26,7 +26,7 @@ namespace PGTA
             string oct_str = oct1 + oct2;
 
             char v = oct_str[0];
-            if (v.Equals("0"))
+            if (v.Equals('0'))
             {
                 this.v_mda = true; //Code validated
             }
@@ -35,7 +35,7 @@ namespace PGTA
                 this.v_mda = false; //Code no validated
             }
             char g = oct_str[1];
-            if (g.Equals("0"))
+            if (g.Equals('0'))
             {
                 this.g_mda = false; //Default
             }
@@ -44,7 +44,7 @@ namespace PGTA
                 this.g_mda = true; //Garbled code
             }
             char l = oct_str[2];
-            if (l.Equals("0"))
+            if (l.Equals('0'))
             {
                 this.l_mda = false; //Mode 3A code as derived from the reply of the transponder
             }

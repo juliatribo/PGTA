@@ -19,7 +19,7 @@ namespace PGTA
 
             oct1 = bf.padding(oct1);
 
-            if (oct1[0].ToString().Equals("1"))
+            if (oct1[0].ToString().Equals('1'))
             {
                 oct1 = bf.complement2(oct1);
                 this.TOS = Convert.ToDouble(Convert.ToInt32(oct1, 2)) * (1 / 128);

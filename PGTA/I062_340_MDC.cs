@@ -25,16 +25,16 @@ namespace PGTA
             string oct_str = oct1 + oct2;
 
             char v = oct_str[0];
-            if (v.Equals("0"))
+            if (v.Equals('0'))
             {
-                this.v = true ; //Code validated
+                this.v = true; //Code validated
             }
             else
             {
                 this.v = false; //Code no validated
             }
             char g = oct_str[1];
-            if (g.Equals("0"))
+            if (g.Equals('0'))
             {
                 this.g = false; //Default
             }

@@ -24,7 +24,7 @@ namespace PGTA
             tba2 = bf.padding(tba2);
 
             string tba_str = tba1 + tba2;
-            if (tba_str[0].Equals("0"))
+            if (tba_str[0].Equals('0'))
             {
                 correctionQNH = false;
             }
@@ -32,8 +32,8 @@ namespace PGTA
             {
                 correctionQNH = true;
             }
-            tba_str = tba_str.Remove(tba_str[0]);
-            if (tba_str[0].ToString().Equals("1"))
+            tba_str = tba_str.Remove(0, 1);
+            if (tba_str[0].ToString().Equals('1'))
             {
                 tba_str = bf.complement2(tba_str);
                 this.tba = Convert.ToInt32(tba_str, 2) * -25;

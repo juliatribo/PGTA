@@ -739,9 +739,9 @@ namespace PGTA
                                             break;
 
                                         case 19://I062/135 Calculated Track Barometric Altitude 
-                                            //I062_135 c19 = new I062_135(buffer[position], buffer[position + 1]);
-                                            //data.TBA = c19.getTba();
-                                            //data.CorrectionQNH = c19.getCorrectQNH();
+                                            I062_135 c19 = new I062_135(buffer[position], buffer[position + 1]);
+                                            data.TBA = c19.getTba();
+                                            data.CorrectionQNH = c19.getCorrectQNH();
                                             position = position + 2;
                                             break;
 
@@ -761,7 +761,7 @@ namespace PGTA
                                                 fx_data = false;
                                                 string oct = Convert.ToString(buffer[position + l], 2);
                                                 oct = bf.padding(oct);
-                                                if (oct[7].Equals("1"))
+                                                if (oct[7].Equals('1'))
                                                 {
                                                     fx_data = true;
                                                 }
@@ -769,7 +769,7 @@ namespace PGTA
                                             position = position + l;
                                             for (int i = 0; i < total_data.Length; i++)
                                             {
-                                                if (total_data[i].Equals("1"))
+                                                if (total_data[i].Equals('1'))
                                                 {
                                                     switch (i)
                                                     {
@@ -870,7 +870,7 @@ namespace PGTA
                                             data.TOS_VAL = 0;
                                             for (int i = 0; i < octeto.Length; i++)
                                             {
-                                                if (octeto[i].Equals("1"))
+                                                if (octeto[i].Equals('1'))
                                                 {
                                                     switch (i)
                                                     {
@@ -959,15 +959,16 @@ namespace PGTA
                                             position = position + 1;
                                             for (int i = 0; i < oct1.Length; i++)
                                             {
-                                                if (oct1[i].Equals("1"))
+                                                char c = oct1[i];
+                                                if (c.Equals('1'))
                                                 {
                                                     switch (i)
                                                     {
                                                         case 0: //Sensor Identification  ¿tengo que poner los datos en los que ya habia o nueva variable?
                                                             data.SID = true;
                                                             I062_340_SID c28_0 = new I062_340_SID(buffer[position], buffer[position + 1]);
-                                                            data.Sac = c28_0.getSAC();
-                                                            data.Sic = c28_0.getSIC();
+                                                            data.SAC2 = c28_0.getSAC();
+                                                            data.SIC2 = c28_0.getSIC();
                                                             position = position + 2;
                                                             break;
 

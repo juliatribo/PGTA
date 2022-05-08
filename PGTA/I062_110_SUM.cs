@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PGTA
 {
-    
+
     internal class I062_110_SUM
     {
         bool M5 = false;
@@ -24,11 +24,11 @@ namespace PGTA
 
             Basic_functions bf = new Basic_functions();
 
-            oct = bf.padding(oct);          
+            oct = bf.padding(oct);
 
             for (int i = 0; i < oct.Length; i++)
             {
-                if (oct[i].Equals("1"))
+                if (oct[i].Equals('1'))
                 {
                     switch (i)
                     {
