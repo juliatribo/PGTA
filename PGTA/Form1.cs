@@ -101,7 +101,7 @@ namespace PGTA
                                 }
                                 frns = frns + var;
                             }
-                            int position = n + p + 3; //posición en la que empiezan los datos
+                            int position = n + p + 3; //posiciÃ³n en la que empiezan los datos
                             for (int q = 0; q < frns.Length; q++)
                             {
                                 if (Convert.ToString(frns[q]).Equals("1"))
@@ -1037,7 +1037,7 @@ namespace PGTA
                                                 {
                                                     switch (i)
                                                     {
-                                                        case 0: //Sensor Identification  ¿tengo que poner los datos en los que ya habia o nueva variable?
+                                                        case 0: //Sensor Identification  Â¿tengo que poner los datos en los que ya habia o nueva variable?
                                                             data.SID = true;
                                                             I062_340_SID c28_0 = new I062_340_SID(buffer[position], buffer[position + 1]);
                                                             data.SAC2 = c28_0.getSAC();
@@ -1069,7 +1069,7 @@ namespace PGTA
                                                             position = position + 2;
                                                             break;
 
-                                                        case 4: //Last Measured Mode 3/A code  ¿¿¿¿¿¿¿¿hace ref al de la cat 060????????????
+                                                        case 4: //Last Measured Mode 3/A code  Â¿Â¿Â¿Â¿Â¿Â¿Â¿Â¿hace ref al de la cat 060????????????
                                                             data.MDA = true;
                                                             I062_340_MDA c28_4 = new I062_340_MDA(buffer[position], buffer[position + 1]);
                                                             data.V_mda = c28_4.getV();
@@ -1181,20 +1181,86 @@ namespace PGTA
                         row.Add("-");
                     }
                     string track_status = "";
-                    if (data.IsMach && data.Target_id_380!=null)
+                    if (data.Target_addr!=0)
                     {
-                        track_status = "ADR = " + data.Target_addr.ToString() +"\n"+ "ID = " + data.Target_id_380 + "\n"+ "MHG = " + data.Mag_heading.ToString() + "\n" + "MACH = " + data.Ias_or_Mach.ToString() + "\n" + "TAS = " + data.Tas.ToString();
+                        track_status = "ADR = " + data.Target_addr.ToString() + "\n";
                     }
-                    else if (data.Target_id_380 != null)
+                    if(data.Target_id_380 != null)
                     {
-                        track_status = "ADR = " + data.Target_addr.ToString() + "\n" + "ID = " + data.Target_id_380 + "\n" + "MHG = " + data.Mag_heading.ToString() + "\n" + "MACH = " + data.Ias_or_Mach.ToString() + "\n" + "TAS = " + data.Tas.ToString();
+                        track_status = track_status + "ID = " + data.Target_id_380 + "\n";
                     }
-                    else
+                    if (data.Mag_heading!=0)
                     {
-                        track_status = "ADR = " + data.Target_addr.ToString() + "\n" + "ID = -"+ "\n"+ "MHG = " + data.Mag_heading.ToString() + "\n" + "IAS = " + data.Ias_or_Mach.ToString() + "\n" + "TAS = " + data.Tas.ToString();
+                        track_status = track_status + "MHG = " + data.Mag_heading.ToString() + "\n";
+                    }
+                    if (data.IsMach && data.Ias_or_Mach!=0)
+                    {
+                        track_status = track_status + "MACH = " + data.Ias_or_Mach.ToString() + "\n";
+                    }
+                    else if(data.Ias_or_Mach != 0)
+                    {
+                        track_status = track_status + "IAS = " + data.Ias_or_Mach.ToString() + "\n";
+                    }
+                    if (data.Tas != 0)
+                    {
+                        track_status = track_status + "TAS = " + data.Tas.ToString() + "\n";
+                    }
+                    if(data.IsSas)
+                    {
+                        track_status = track_status +"Selected Altitude Source Info = "+ data.Source + "\n" +"Selected Altitude = "+ data.Fms_altitude.ToString()+"\n";
+                    }
+                    if(data.IsManageVertical)
+                    {
+                        track_status = track_status + "Final State Manage Vertical Mode \n";
+                    }
+                    if (data.IsAltitudeHold)
+                    {
+                        track_status = track_status + "Final State Altitude Hold \n";
+                    }
+                    if (data.IsApproachMode)
+                    {
+                        track_status = track_status + "Final State Approach Mode \n";
+                    }
+                    if (data.Fms_final_state_altitude!=0)
+                    {
+                        track_status = track_status + "Final State Selected Alt = " + data.Fms_final_state_altitude.ToString() + " \n";
+                    }
+                    if (data.isTrajIntentAviable)
+                    {
+                        track_status = track_status + "Trajectory Intent Data Available \n";
+                    }
+                    if (data.isTrajIntentValid)
+                    {
+                        track_status = track_status + "Trajectory Intent Data Valid \n";
+                    }
+                    if (data.Rep_traj_int_fact!=0)
+                    {
+                        track_status = track_status + "Repetition Factor Trajectory Intent Data = " + data.Rep_traj_int_fact.ToString() + " \n";
+                    }
+                    if (data.isTcp_available)
+                    {
+                        track_status = track_status + "TCP Available \n";
+                    }
+                    if (data.isTcp_compilance)
+                    {
+                        track_status = track_status + "TCP Compilance \n";
+                    }
+                    if (data.Traj_chang_point!=0)
+                    {
+                        track_status = track_status + "TCP Number"+ data.Traj_chang_point.ToString()+ "\n";
+                    }
+                    if (data.Alt_traj_itent != 0)
+                    {
+                        track_status = track_status + "Trajectory Intent Data Alt = "+data.Alt_traj_itent.ToString() + "\n";
+                    }
+                    
+                    if (track_status == "")
+                    {
+                        track_status = "-";
                     }
                     row.Add(track_status);
                     row.Add(data.Track_num.ToString());
+
                     //row.Add(data.dt.Columns.Add("Track status");
                     //row.Add(data.dt.Columns.Add("System Track Update Ages");
                     //row.Add(data.dt.Columns.Add("Mode of Movement");
@@ -1299,7 +1365,6 @@ namespace PGTA
 
                     row.Add(measured_info);
 
-
                     DataRow row2 = dt.NewRow();
                     row2.ItemArray = row.ToArray();
                     dt.Rows.Add(row2);
@@ -1314,8 +1379,6 @@ namespace PGTA
                 mapToolStripMenuItem.Enabled = true;
             }
         }
-
- 
 
 
         private void mapToolStripMenuItem_Click(object sender, EventArgs e)

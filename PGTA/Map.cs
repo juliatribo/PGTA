@@ -13,6 +13,9 @@ using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using System.Drawing.Drawing2D;
+using SharpKml.Dom;
+using Point = SharpKml.Dom.Point;
+using Placemark = SharpKml.Dom.Placemark;
 
 namespace PGTA
 {
@@ -58,7 +61,7 @@ namespace PGTA
             Bitmap plane1 = (Bitmap)Image.FromFile("img/plane.png");
             Bitmap plane = new Bitmap(plane1, new Size(plane1.Width / 12, plane1.Height / 12));
 
-            TimeSpan timeSpan = watch.Elapsed;
+            System.TimeSpan timeSpan = watch.Elapsed;
             double time = timeSpan.TotalSeconds + all_data[0].Time_track_info;
 
             while (time >= all_data[counter].Time_track_info)
@@ -88,12 +91,12 @@ namespace PGTA
 
         private void button2_Click(object sender, EventArgs e)
         {
-            timer1.Interval = 100;
+            timer1.Interval = 10000;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            timer1.Interval = 50;
+            timer1.Interval = 20000;
         }
 
         public Bitmap RotateImg(Bitmap bmpimage, double ang)
@@ -161,6 +164,27 @@ namespace PGTA
         private void button5_Click(object sender, EventArgs e)
         {
             markerOverlay2.Markers.Clear();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var point = new Point
+            {
+               // Coordinate = new Vector(-13.163959, -72.545992),
+            };
+            // This is the Element we are going to save to the Kml file.
+            var placemark = new Placemark
+            {
+                Geometry = point,
+                Name = "Machu Picchu",
+            };
+            // This allows us to save an Element easily.
+            SharpKml.Engine.KmlFile kml = SharpKml.Engine.KmlFile.Create(placemark, false);
+            using (FileStream stream = File.OpenWrite(@"c:\tmp\test_kml_placemark.kml"))
+            {
+                kml.Save(stream);
+            }
+
         }
     }
 }
