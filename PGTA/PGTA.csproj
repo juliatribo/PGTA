@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="GMap.NET.WindowsForms" Version="1.7.5" />
+    <PackageReference Include="SharpKml.Core" Version="5.2.0" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.115.5" />
   </ItemGroup>
 

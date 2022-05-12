@@ -1108,24 +1108,85 @@ namespace PGTA
                         row.Add("-");
                     }
                     string track_status = "";
-                    if (data.IsMach && data.Target_id_380!=null)
+                    if (data.Target_addr!=0)
                     {
-                        track_status = "ADR = " + data.Target_addr.ToString() +"\n"+ "ID = " + data.Target_id_380 + "\n"+ "MHG = " + data.Mag_heading.ToString() + "\n" + "MACH = " + data.Ias_or_Mach.ToString() + "\n" + "TAS = " + data.Tas.ToString();
+                        track_status = "ADR = " + data.Target_addr.ToString() + "\n";
                     }
-                    else if (data.Target_id_380 != null)
+                    if(data.Target_id_380 != null)
                     {
-                        track_status = "ADR = " + data.Target_addr.ToString() + "\n" + "ID = " + data.Target_id_380 + "\n" + "MHG = " + data.Mag_heading.ToString() + "\n" + "MACH = " + data.Ias_or_Mach.ToString() + "\n" + "TAS = " + data.Tas.ToString();
+                        track_status = track_status + "ID = " + data.Target_id_380 + "\n";
                     }
-                    else
+                    if (data.Mag_heading!=0)
                     {
-                        track_status = "ADR = " + data.Target_addr.ToString() + "\n" + "ID = -"+ "\n"+ "MHG = " + data.Mag_heading.ToString() + "\n" + "IAS = " + data.Ias_or_Mach.ToString() + "\n" + "TAS = " + data.Tas.ToString();
+                        track_status = track_status + "MHG = " + data.Mag_heading.ToString() + "\n";
+                    }
+                    if (data.IsMach && data.Ias_or_Mach!=0)
+                    {
+                        track_status = track_status + "MACH = " + data.Ias_or_Mach.ToString() + "\n";
+                    }
+                    else if(data.Ias_or_Mach != 0)
+                    {
+                        track_status = track_status + "IAS = " + data.Ias_or_Mach.ToString() + "\n";
+                    }
+                    if (data.Tas != 0)
+                    {
+                        track_status = track_status + "TAS = " + data.Tas.ToString() + "\n";
+                    }
+                    if(data.IsSas)
+                    {
+                        track_status = track_status +"Selected Altitude Source Info = "+ data.Source + "\n" +"Selected Altitude = "+ data.Fms_altitude.ToString()+"\n";
+                    }
+                    if(data.IsManageVertical)
+                    {
+                        track_status = track_status + "Final State Manage Vertical Mode \n";
+                    }
+                    if (data.IsAltitudeHold)
+                    {
+                        track_status = track_status + "Final State Altitude Hold \n";
+                    }
+                    if (data.IsApproachMode)
+                    {
+                        track_status = track_status + "Final State Approach Mode \n";
+                    }
+                    if (data.Fms_final_state_altitude!=0)
+                    {
+                        track_status = track_status + "Final State Selected Alt = " + data.Fms_final_state_altitude.ToString() + " \n";
+                    }
+                    if (data.isTrajIntentAviable)
+                    {
+                        track_status = track_status + "Trajectory Intent Data Available \n";
+                    }
+                    if (data.isTrajIntentValid)
+                    {
+                        track_status = track_status + "Trajectory Intent Data Valid \n";
+                    }
+                    if (data.Rep_traj_int_fact!=0)
+                    {
+                        track_status = track_status + "Repetition Factor Trajectory Intent Data = " + data.Rep_traj_int_fact.ToString() + " \n";
+                    }
+                    if (data.isTcp_available)
+                    {
+                        track_status = track_status + "TCP Available \n";
+                    }
+                    if (data.isTcp_compilance)
+                    {
+                        track_status = track_status + "TCP Compilance \n";
+                    }
+                    if (data.Traj_chang_point!=0)
+                    {
+                        track_status = track_status + "TCP Number"+ data.Traj_chang_point.ToString()+ "\n";
+                    }
+                    if (data.Alt_traj_itent != 0)
+                    {
+                        track_status = track_status + "Trajectory Intent Data Alt = "+data.Alt_traj_itent.ToString() + "\n";
+                    }
+                    
+                    if (track_status == "")
+                    {
+                        track_status = "-";
                     }
                     row.Add(track_status);
                     row.Add(data.Track_num.ToString());
-                    //row.Add(data.dt.Columns.Add("Track status");
-                    //row.Add(data.dt.Columns.Add("System Track Update Ages");
-                    //row.Add(data.dt.Columns.Add("Mode of Movement");
-                    //row.Add(data.dt.Columns.Add("Track Data Ages");
 
                     DataRow row2 = dt.NewRow();
                     row2.ItemArray = row.ToArray();
@@ -1140,226 +1201,6 @@ namespace PGTA
                 dataGridView1.Visible = true;
             }
         }
-
-
-        //string target_id_245;
-        //int target_addr;
-        //string target_id_380;
-        //double mag_heading;
-        //bool is_mach;
-        //double ias_or_Mach;
-        //double tas;
-        //bool sas;
-        //string source;
-        //double fms_altitude;
-        //bool manage_vertical;
-        //bool altitude_hold;
-        //bool approach_mode;
-        //double fms_final_state_altitude;
-        //bool trajIntentAviable;
-        //bool trajIntentValid;
-        //int rep_traj_int_fact;
-        //bool tcp_available;
-        //bool tcp_compilance;
-        //int traj_chang_point;
-        //double alt_traj_itent;
-        //double lat_traj_int_wgs84;
-        //double long_traj_int_wgs84;
-        //string point_type;
-        //string td;
-        //bool turn_radius_availab;
-        //bool tov_availab;
-        //double time_over_time;
-        //double tcp_trun_radius;
-        //string comm_capability_transpond;
-        //string flight_status;
-        //bool specific_capability;
-        //string alt_capability;
-        //bool aircraft_id_capability;
-        //string acas_adsb;
-        //string mult_nav_aids_adsb;
-        //string diff_correlation_adsb;
-        //bool tranpond_ground_bit_set_adsb;
-        //string flight_stat_adsb;
-        //double barom_vert_rate;
-        //double geom_vert_rate;
-        //double roll_angle;
-        //string turn_indicator;
-        //double rate_of_turn;
-        //double track_angle;
-        //double gs;
-        //int vel_uncert_cat;
-        //double wind_speed;
-        //double wind_direction;
-        //double temperature;
-        //double turbulence;
-        //string emitter_cat;
-        //double aircraft_derived_latWGS84;
-        //double aircraft_derived_longWGS84;
-        //double geom_alt;
-        //int position_uncert;
-        //double ias;
-        //double mach;
-        //double barom_press_sett;
-        //int track_num;
-        //bool monosensor;
-        //bool spi;
-        //string most_reliable_height;
-        //string source_080;
-        //bool confirmed_track;
-        //string type_of_track;
-        //bool last_msg;
-        //bool first_msg;
-        //bool flight_plan_correlated;
-        //bool adsb_inconsistent;
-        //bool slave_track_promotion;
-        //string service_used;
-        //bool amalgamation;
-        //string type_of_target_int4;
-        //bool military_emergency;
-        //bool military_id;
-        //string type_of_target_int5;
-        //bool age_of_trackUpdate_higher_than_thold;
-        //bool age_of_PSR_higher_than_thold;
-        //bool age_of_SSR_higher_than_thold;
-        //bool age_of_ModeS_higher_than_thold;
-        //bool age_of_ADSB_higher_than_thold;
-        //bool special_used_code;
-        //bool assigned_modeA_code_conflict;
-        //string surveillance_data_status;
-        //string emergency_status_indication;
-        //bool potential_false_track_indication;
-        //bool track_created_FPLdata;
-        //bool duplicate_3Acode;
-        //bool duplicate_flight_plan;
-        //bool duplicate_fplan_for_manual_corr;
-        //bool surface_target;
-        //bool duplicate_flight_id;
-        //bool inconsistent_emerg_code;
-        //double track_age;
-        //double psr_age;
-        //double ssr_age;
-        //double mode_s_age;
-        //double adsc_age;
-        //double adsb_ext_sq_age;
-        //double adsb_vdl_mode4_age;
-        //double adsb_uat_age;
-        //double loop_age;
-        //double multilater_age;
-        //string status_movement_trans;
-        //string status_movement_long;
-        //string status_movement_vert;
-        //bool altitude_discrepacy;
-        //double meas_fl_age;
-        //double mode1_age;
-        //double mode2_age;
-        //double mode3A_age;
-        //double mode4_age;
-        //double mode5A_age;
-        //double mag_head_age;
-        //double ias_mach_age;
-        //double tas_age;
-        //double select_alt_age;
-        //double fin_select_alt_age;
-        //double traj_age;
-        //double comm_acas_flight_age;
-        //double stat_by_adsb_age;
-        //double acas_resol_advisory_age;
-        //double baromet_vert_rate_age;
-        //double geomet_vert_rate_age;
-        //double roll_angle_age;
-        //double track_angle_rate_age;
-        //double track_angle_age;
-        //double gs_age;
-        //double vel_uncert_age;
-        //double metd_age;
-        //double emitt_cat_age;
-        //double pos_age;
-        //double geom_alt_age;
-        //double pos_uncert_age;
-        //double modeSMB_age;
-        //double ias_age;
-        //double mach_age;
-        //double barom_press_sett_age;
-        //double flight_level;
-        //double track_geometric_altitude;
-        //int track_barometric_altitude;
-        //bool correctionQNH;
-        //double rate_climb_descent;
-        //string vehicle;
-        //int octal_mode2A;
-        //bool tag;
-        //bool csn;
-        //bool ifi;
-        //bool fct;
-        //bool tac;
-        //bool wtc;
-        //bool dep;
-        //bool dst;
-        //bool rds;
-        //bool cfl;
-        //bool ctl;
-        //bool tod;
-        //bool ast;
-        //bool sts;
-        //bool std;
-        //bool sta;
-        //bool pem;
-        //bool pec;
-        //bool sum;
-        //bool pmn;
-        //bool pos;
-        //bool ga;
-        //bool em1;
-        //bool tos;
-        //bool xp;
-        //bool m5;
-        //bool id;
-        //bool da;
-        //bool m1;
-        //bool m2;
-        //bool m3;
-        //bool mc;
-        //bool x_100;
-        //int pin;
-        //int nat;
-        //int mis;
-        //double lat_M5;
-        //double lon_M5;
-        //string res_AltitudeGNSS;
-        //int altitudeGNSS;
-        //int code_M1;
-        //double tos_value;
-        //bool x5;
-        //bool xc;
-        //bool x3;
-        //bool x2;
-        //bool x1;
-        //bool sid;
-        //bool pos_340;
-        //bool hei;
-        //bool mdc;
-        //bool mda;
-        //bool typ;
-        //double rho;
-        //double theta;
-        //int height;
-        //bool validated_code_340;
-        //bool garbled_code_340;
-        //double last_mesured_modeC_code;
-        //bool v_mda;
-        //bool g_mda;
-        //bool l_mda;
-        //int codeM3A;
-        //string typ_val;
-        //bool sim;
-        //bool rab;
-        //bool tst;
-
-
-
-    
-
 
         private void mapToolStripMenuItem_Click(object sender, EventArgs e)
         {
