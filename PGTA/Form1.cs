@@ -9,6 +9,7 @@ namespace PGTA
         public Form1()
         {
             InitializeComponent();
+            mapToolStripMenuItem.Enabled = false;
         }
 
         DataDecoded[] all_data;
@@ -57,6 +58,14 @@ namespace PGTA
                 dt.Columns.Add("System Track Update Ages (Click row to expand)");
                 dt.Columns.Add("Mode of Movement (Click to expand)");
                 dt.Columns.Add("Track Data Ages (Click to expand)");
+                dt.Columns.Add("Measured Flight Level");
+                dt.Columns.Add("Geometric Altitude (ft)");
+                dt.Columns.Add("Barometric Altitude (Click to expand)");
+                dt.Columns.Add("Rate of Climb/Descent (feet/minute)");
+                dt.Columns.Add("Vehicle Fleet ID");
+                dt.Columns.Add("Mode 5 Data reports & Extended Mode 1 Code (Click to expand)");
+                dt.Columns.Add("Track Mode 2 Code");
+                dt.Columns.Add("Measured Information (Click to expand)");
 
                 this.all_data = new DataDecoded[1000000];
 
@@ -92,7 +101,7 @@ namespace PGTA
                                 }
                                 frns = frns + var;
                             }
-                            int position = n + p + 3; //posición en la que empiezan los datos
+                            int position = n + p + 3; //posiciÃ³n en la que empiezan los datos
                             for (int q = 0; q < frns.Length; q++)
                             {
                                 if (Convert.ToString(frns[q]).Equals("1"))
@@ -774,80 +783,144 @@ namespace PGTA
                                                     switch (i)
                                                     {
                                                         case 0: //FPPS Identification Tag
-                                                            data.TAG = true;
+                                                            data.TAG = "SI";
                                                             position = position + 2;
                                                             break;
                                                         case 1: //Callsign
-                                                            data.CSN = true;
+                                                            data.CSN = "SI";
                                                             position = position + 7;
                                                             break;
                                                         case 2: //IFPS_FLIGHT_ID
-                                                            data.IFI = true;
+                                                            data.IFI = "SI";
                                                             position = position + 4;
                                                             break;
                                                         case 3: //Flight Category 
-                                                            data.FCT = true;
+                                                            data.FCT = "SI";
                                                             position = position + 1;
                                                             break;
                                                         case 4: //Type of Aircraft 
-                                                            data.TAC = true;
+                                                            data.TAC = "SI";
                                                             position = position + 4;
                                                             break;
                                                         case 5: //Wake Turbulence Category 
-                                                            data.WTC = true;
+                                                            data.WTC = "SI";
                                                             position = position + 1;
                                                             break;
                                                         case 6: //Departure Airport 
-                                                            data.DEP = true;
+                                                            data.DEP = "SI";
                                                             position = position + 4;
                                                             break;
                                                         case 7: //FX
                                                             break;
                                                         case 8: //Destination Airport 
-                                                            data.DST = true;
+                                                            data.DST = "SI";
                                                             position = position + 4;
                                                             break;
                                                         case 9: //Runway Designation
-                                                            data.RDS = true;
+                                                            data.RDS = "SI";
                                                             position = position + 3;
                                                             break;
                                                         case 10: //Current Cleared Flight Level 
-                                                            data.CFL = true;
+                                                            data.CFL = "SI";
                                                             position = position + 2;
                                                             break;
                                                         case 11: //Current Control Position
-                                                            data.CTL = true;
+                                                            data.CTL = "SI";
                                                             position = position + 2;
                                                             break;
                                                         case 12: //Time of Departure / Arrival 
-                                                            data.TOD = true;
+                                                            data.TOD = "SI";
                                                             position = position + 5;
                                                             break;
                                                         case 13: //Aircraft Stand 
-                                                            data.AST = true;
+                                                            data.AST = "SI";
                                                             position = position + 6;
                                                             break;
                                                         case 14: //Stand Status
-                                                            data.STS = true;
+                                                            data.STS = "SI";
                                                             position = position + 1;
                                                             break;
                                                         case 15: //FX
                                                             break;
                                                         case 16: //Standard Instrument Departure
-                                                            data.STD = true;
+                                                            data.STD = "SI";
                                                             position = position + 7;
                                                             break;
                                                         case 17: //STandard Instrument ARrival
-                                                            data.STD = true;
+                                                            data.STA = "SI";
                                                             position = position + 7;
                                                             break;
                                                         case 18: //Pre-emergency Mode 3/A code 
-                                                            data.PEM = true;
+                                                            data.PEM = "SI";
                                                             position = position + 2;
                                                             break;
                                                         case 19: // Pre-emergency Callsign 
-                                                            data.PEC = true;
+                                                            data.PEC = "SI";
                                                             position = position + 7;
+                                                            break;
+                                                    }
+                                                }
+                                                else 
+                                                {
+                                                    switch (i)
+                                                    {
+                                                        case 0: //FPPS Identification Tag
+                                                            data.TAG = "NO";
+                                                            break;
+                                                        case 1: //Callsign
+                                                            data.CSN = "NO";
+                                                            break;
+                                                        case 2: //IFPS_FLIGHT_ID
+                                                            data.IFI = "NO";
+                                                            break;
+                                                        case 3: //Flight Category 
+                                                            data.FCT = "NO";
+                                                            break;
+                                                        case 4: //Type of Aircraft 
+                                                            data.TAC = "NO";
+                                                            break;
+                                                        case 5: //Wake Turbulence Category 
+                                                            data.WTC = "NO";
+                                                            break;
+                                                        case 6: //Departure Airport 
+                                                            data.DEP = "NO";
+                                                            break;
+                                                        case 7: //FX
+                                                            break;
+                                                        case 8: //Destination Airport 
+                                                            data.DST = "NO";
+                                                            break;
+                                                        case 9: //Runway Designation
+                                                            data.RDS = "NO";
+                                                            break;
+                                                        case 10: //Current Cleared Flight Level 
+                                                            data.CFL = "NO";
+                                                            break;
+                                                        case 11: //Current Control Position
+                                                            data.CTL = "NO";
+                                                            break;
+                                                        case 12: //Time of Departure / Arrival 
+                                                            data.TOD = "NO";
+                                                            break;
+                                                        case 13: //Aircraft Stand 
+                                                            data.AST = "NO";
+                                                            break;
+                                                        case 14: //Stand Status
+                                                            data.STS = "NO";
+                                                            break;
+                                                        case 15: //FX
+                                                            break;
+                                                        case 16: //Standard Instrument Departure
+                                                            data.STD = "NO";
+                                                            break;
+                                                        case 17: //STandard Instrument ARrival
+                                                            data.STA = "NO";
+                                                            break;
+                                                        case 18: //Pre-emergency Mode 3/A code 
+                                                            data.PEM = "NO";
+                                                            break;
+                                                        case 19: // Pre-emergency Callsign 
+                                                            data.PEC = "NO";
                                                             break;
                                                     }
                                                 }
@@ -964,7 +1037,7 @@ namespace PGTA
                                                 {
                                                     switch (i)
                                                     {
-                                                        case 0: //Sensor Identification  ¿tengo que poner los datos en los que ya habia o nueva variable?
+                                                        case 0: //Sensor Identification  Â¿tengo que poner los datos en los que ya habia o nueva variable?
                                                             data.SID = true;
                                                             I062_340_SID c28_0 = new I062_340_SID(buffer[position], buffer[position + 1]);
                                                             data.SAC2 = c28_0.getSAC();
@@ -996,7 +1069,7 @@ namespace PGTA
                                                             position = position + 2;
                                                             break;
 
-                                                        case 4: //Last Measured Mode 3/A code  ¿¿¿¿¿¿¿¿hace ref al de la cat 060????????????
+                                                        case 4: //Last Measured Mode 3/A code  Â¿Â¿Â¿Â¿Â¿Â¿Â¿Â¿hace ref al de la cat 060????????????
                                                             data.MDA = true;
                                                             I062_340_MDA c28_4 = new I062_340_MDA(buffer[position], buffer[position + 1]);
                                                             data.V_mda = c28_4.getV();
@@ -1188,6 +1261,110 @@ namespace PGTA
                     row.Add(track_status);
                     row.Add(data.Track_num.ToString());
 
+                    //row.Add(data.dt.Columns.Add("Track status");
+                    //row.Add(data.dt.Columns.Add("System Track Update Ages");
+                    //row.Add(data.dt.Columns.Add("Mode of Movement");
+                    //row.Add(data.dt.Columns.Add("Track Data Ages");
+                    row.Add("Track status");
+                    row.Add("System Track Update Ages");
+                    row.Add("Mode of Movement");
+                    row.Add("Track Data Ages");
+                    row.Add(data.FL.ToString());
+                    row.Add(data.TGA.ToString());
+                    string barometric_alt;
+                    if (data.CorrectionQNH)
+                    {
+                        barometric_alt = "QNH correction" + "\n" + "BA = " + data.TBA.ToString() + " ft";
+                    }
+                    else
+                    {
+                        barometric_alt = "No QNH correction" + "\n" + "BA = " + data.TBA.ToString() + " ft";
+                    }
+                    row.Add(barometric_alt);
+                    row.Add(data.Rate.ToString());
+                    row.Add(data.Vehicle);
+
+                    //Mode 5 Data reports & Extended Mode 1 Code (Click to expand)
+                    string mode5 = " - ";
+                    if (data.SUM)
+                    {
+                        mode5 = "M5 = " + data.M5 + "\n" + "ID = " + data.ID + "\n" + "DA = " + data.DA + "\n" + "M1 = " + data.M1 + "\n" + "M2 = " + data.M2 + "\n" + "M3 = " + data.M3 + "\n" + "MC = " + data.MC + "\n" + "X = " + data.X_110;
+                    }
+                    if (data.PMN)
+                    {
+                        mode5 = mode5 + "\n" + "PIN = " + data.PIN.ToString() + "\n" + "NAT = " + data.NAT.ToString() + "\n" + "MIS = " + data.MIS.ToString();
+                    }
+                    if (data.PMN)
+                    {
+                        mode5 = mode5 + "\n" + "PIN = " + data.PIN.ToString() + "\n" + "NAT = " + data.NAT.ToString() + "\n" + "MIS = " + data.MIS.ToString();
+                    }
+                    if (data.POS)
+                    {
+                        mode5 = mode5 + "\n" + "LAT = " + data.LONG_M5.ToString() + " deg"  + "\n" + "LONG = " + data.LAT_M5.ToString() + " deg" ;
+                    }
+                    if (data.GA)
+                    {
+                        mode5 = mode5 + "\n" + "GA reported in " + data.RES_GNSS + "\n" + "GA = " + data.ALT_GNSS.ToString() + " ft";
+                    }
+                    if (data.EM1)
+                    {
+                        mode5 = mode5 + "\n" + "EM1 = " + data.CODE_M1 ;
+                    }
+                    if (data.TOS)
+                    {
+                        mode5 = mode5 + "\n" + "TOS = " + data.TOS_VAL + " s";
+                    }
+                    if (data.TOS)
+                    {
+                        mode5 = mode5 + "\n" + "TOS = " + data.TOS_VAL + " s";
+                    }
+                    if (data.XP)
+                    {
+                        mode5 = mode5 + "\n" + "X5 = " + data.X5 + "\n" + "XC = " + data.XC + "\n" + "X3 = " + data.X3 + "\n" + "X2 = " + data.X2 + "\n" + "X1 = " + data.X1;
+                    }
+                    row.Add(mode5);
+
+                    //Track Mode 2 Code
+                    string Octal_mode2A = "";
+                    if (data.Octal_mode2A == 0)
+                    {
+                        Octal_mode2A = "-";
+                    }
+                    else
+                    {
+                        Octal_mode2A = data.Octal_mode2A.ToString();
+                    }
+                    row.Add(Octal_mode2A);
+
+                    //Measured Information (Click to expand)
+                    string measured_info = " - ";
+                    if (data.SID)
+                    {
+                        measured_info = "SAC = " + data.SAC2.ToString() + "\n" + "SIC = " + data.SIC2.ToString();
+                    }
+                    if (data.POS)
+                    {
+                        measured_info = measured_info + "\n" + "RHO = " + data.RHO.ToString() + " NM"+ "\n" + "THETA = " + data.THETA.ToString() + " deg";
+                    }
+                    if (data.HEI)
+                    {
+                        measured_info = measured_info + "\n" + "HEIGHT = " + data.HEIGHT.ToString() +  " ft";
+                    }
+                    if (data.MDC)
+                    {
+                        measured_info = measured_info + "\n" + "V = " + data.VC.ToString() + "\n" + "G = " + data.GC.ToString() + "\n" + "Mode C Code = " + data.Code_Mc;
+                    }
+                    if (data.MDA)
+                    {
+                        measured_info = measured_info + "\n"+  "V = " + data.V_mda.ToString() + "\n" + "G = " + data.G_mda.ToString() + "\n" + "L = " + data.L_mda.ToString() + "\n" + "Mode 3/A = " + data.CodeM3A.ToString();
+                    }
+                    if (data.TYP)
+                    {
+                        measured_info = measured_info + "\n" + "TYP = " + data.Typ_val + "\n" + "SIM = " + data.SIM.ToString() + "\n" + "RAB = " + data.RAB.ToString() + "\n" + "TST = " + data.TST.ToString();
+                    }
+
+                    row.Add(measured_info);
+
                     DataRow row2 = dt.NewRow();
                     row2.ItemArray = row.ToArray();
                     dt.Rows.Add(row2);
@@ -1199,8 +1376,10 @@ namespace PGTA
 
                 dataGridView1.DataSource = dt;
                 dataGridView1.Visible = true;
+                mapToolStripMenuItem.Enabled = true;
             }
         }
+
 
         private void mapToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1226,6 +1405,7 @@ namespace PGTA
                 }
             }
         }
+
     }
 
 }

@@ -26,11 +26,11 @@ namespace PGTA
             char res = oct_str[1];
             if (res.Equals('0'))
             {
-                this.RES = "resolution 100ft increments";
+                this.RES = "100ft increments";
             }
             else
             {
-                this.RES = "resolution 25 ft increments";
+                this.RES = "25 ft increments";
             }
 
             string altitude = oct_str.Substring(2, 14);

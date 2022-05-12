@@ -177,24 +177,24 @@ namespace PGTA
         double rate_climb_descent;
         string vehicle;
         int octal_mode2A;
-        bool tag;
-        bool csn;
-        bool ifi;
-        bool fct;
-        bool tac;
-        bool wtc;
-        bool dep;
-        bool dst;
-        bool rds;
-        bool cfl;
-        bool ctl;
-        bool tod;
-        bool ast;
-        bool sts;
-        bool std;
-        bool sta;
-        bool pem;
-        bool pec;
+        string tag = "-";
+        string csn = "-";
+        string ifi = "-";
+        string fct = "-";
+        string tac = "-";
+        string wtc = "-";
+        string dep = "-";
+        string dst = "-";
+        string rds = "-";
+        string cfl = "-";
+        string ctl = "-";
+        string tod = "-";
+        string ast = "-";
+        string sts = "-";
+        string std = "-";
+        string sta = "-";
+        string pem = "-";
+        string pec = "-";
 
         bool sum;
         bool pmn;
@@ -438,28 +438,28 @@ namespace PGTA
         public string Vehicle { get { return vehicle; } set { vehicle = value; } }
         public int Octal_mode2A { get { return octal_mode2A; } set { octal_mode2A = value; } }
         
-        public bool TAG { get { return tag; } set { tag = value; } }
-        public bool CSN { get { return csn; } set { csn = value; } }
+        public string TAG { get { return tag; } set { tag = value; } }
+        public string CSN { get { return csn; } set { csn = value; } }
 
-        public bool IFI { get { return ifi; } set { ifi = value; } }
-        public bool FCT { get { return fct; } set { fct = value; } }
-        public bool TAC { get { return tac; } set { tac = value; } }
-        public bool WTC { get { return wtc; } set { wtc = value; } }
+        public string IFI { get { return ifi; } set { ifi = value; } }
+        public string FCT { get { return fct; } set { fct = value; } }
+        public string TAC { get { return tac; } set { tac = value; } }
+        public string WTC { get { return wtc; } set { wtc = value; } }
 
-        public bool DEP { get { return dep; } set { dep = value; } }
-        public bool DST { get { return dst; } set { dst = value; } }
-        public bool RDS { get { return rds; } set { rds = value; } }
-        public bool CFL { get { return cfl; } set { cfl = value; } }
+        public string DEP { get { return dep; } set { dep = value; } }
+        public string DST { get { return dst; } set { dst = value; } }
+        public string RDS { get { return rds; } set { rds = value; } }
+        public string CFL { get { return cfl; } set { cfl = value; } }
 
-        public bool CTL { get { return ctl; } set { ctl = value; } }
-        public bool TOD { get { return tod; } set { tod = value; } }
-        public bool AST { get { return ast; } set { ast = value; } }
-        public bool STS { get { return sts; } set { sts = value; } }
+        public string CTL { get { return ctl; } set { ctl = value; } }
+        public string TOD { get { return tod; } set { tod = value; } }
+        public string AST { get { return ast; } set { ast = value; } }
+        public string STS { get { return sts; } set { sts = value; } }
 
-        public bool STD { get { return std; } set { std = value; } }
-        public bool STA { get { return sta; } set { sta = value; } }
-        public bool PEM { get { return pem; } set { pem = value; } }
-        public bool PEC { get { return pec; } set { pec = value; } }
+        public string STD { get { return std; } set { std = value; } }
+        public string STA { get { return sta; } set { sta = value; } }
+        public string PEM { get { return pem; } set { pem = value; } }
+        public string PEC { get { return pec; } set { pec = value; } }
 
         public bool SUM { get { return sum; } set { sum = value; } }
         public bool PMN { get { return pmn; } set { pmn = value; } }
