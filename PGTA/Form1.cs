@@ -1180,95 +1180,572 @@ namespace PGTA
                     {
                         row.Add("-");
                     }
-                    string track_status = "";
+                    string aircraft_data = "";
                     if (data.Target_addr!=0)
                     {
-                        track_status = "ADR = " + data.Target_addr.ToString() + "\n";
+                        aircraft_data = "ADR = " + data.Target_addr.ToString() + "\n";
                     }
                     if(data.Target_id_380 != null)
                     {
-                        track_status = track_status + "ID = " + data.Target_id_380 + "\n";
+                        aircraft_data = aircraft_data + "ID = " + data.Target_id_380 + "\n";
                     }
                     if (data.Mag_heading!=0)
                     {
-                        track_status = track_status + "MHG = " + data.Mag_heading.ToString() + "\n";
+                        aircraft_data = aircraft_data + "MHG = " + data.Mag_heading.ToString() + "\n";
                     }
                     if (data.IsMach && data.Ias_or_Mach!=0)
                     {
-                        track_status = track_status + "MACH = " + data.Ias_or_Mach.ToString() + "\n";
+                        aircraft_data = aircraft_data + "MACH = " + data.Ias_or_Mach.ToString() + "\n";
                     }
                     else if(data.Ias_or_Mach != 0)
                     {
-                        track_status = track_status + "IAS = " + data.Ias_or_Mach.ToString() + "\n";
+                        aircraft_data = aircraft_data + "IAS = " + data.Ias_or_Mach.ToString() + "\n";
                     }
                     if (data.Tas != 0)
                     {
-                        track_status = track_status + "TAS = " + data.Tas.ToString() + "\n";
+                        aircraft_data = aircraft_data + "TAS = " + data.Tas.ToString() + "\n";
                     }
                     if(data.IsSas)
                     {
-                        track_status = track_status +"Selected Altitude Source Info = "+ data.Source + "\n" +"Selected Altitude = "+ data.Fms_altitude.ToString()+"\n";
+                        aircraft_data = aircraft_data + "Selected Altitude Source Info = "+ data.Source + "\n" +"Selected Altitude = "+ data.Fms_altitude.ToString()+"\n";
                     }
                     if(data.IsManageVertical)
                     {
-                        track_status = track_status + "Final State Manage Vertical Mode \n";
+                        aircraft_data = aircraft_data + "Final State Manage Vertical Mode \n";
                     }
                     if (data.IsAltitudeHold)
                     {
-                        track_status = track_status + "Final State Altitude Hold \n";
+                        aircraft_data = aircraft_data + "Final State Altitude Hold \n";
                     }
                     if (data.IsApproachMode)
                     {
-                        track_status = track_status + "Final State Approach Mode \n";
+                        aircraft_data = aircraft_data + "Final State Approach Mode \n";
                     }
                     if (data.Fms_final_state_altitude!=0)
                     {
-                        track_status = track_status + "Final State Selected Alt = " + data.Fms_final_state_altitude.ToString() + " \n";
+                        aircraft_data = aircraft_data + "Final State Selected Alt = " + data.Fms_final_state_altitude.ToString() + " \n";
                     }
                     if (data.isTrajIntentAviable)
                     {
-                        track_status = track_status + "Trajectory Intent Data Available \n";
+                        aircraft_data = aircraft_data + "Trajectory Intent Data Available \n";
                     }
                     if (data.isTrajIntentValid)
                     {
-                        track_status = track_status + "Trajectory Intent Data Valid \n";
+                        aircraft_data = aircraft_data + "Trajectory Intent Data Valid \n";
                     }
                     if (data.Rep_traj_int_fact!=0)
                     {
-                        track_status = track_status + "Repetition Factor Trajectory Intent Data = " + data.Rep_traj_int_fact.ToString() + " \n";
+                        aircraft_data = aircraft_data + "Repetition Factor Trajectory Intent Data = " + data.Rep_traj_int_fact.ToString() + " \n";
                     }
                     if (data.isTcp_available)
                     {
-                        track_status = track_status + "TCP Available \n";
+                        aircraft_data = aircraft_data + "TCP Available \n";
                     }
                     if (data.isTcp_compilance)
                     {
-                        track_status = track_status + "TCP Compilance \n";
+                        aircraft_data = aircraft_data + "TCP Compilance \n";
                     }
                     if (data.Traj_chang_point!=0)
                     {
-                        track_status = track_status + "TCP Number"+ data.Traj_chang_point.ToString()+ "\n";
+                        aircraft_data = aircraft_data + "TCP Number"+ data.Traj_chang_point.ToString()+ "\n";
                     }
                     if (data.Alt_traj_itent != 0)
                     {
-                        track_status = track_status + "Trajectory Intent Data Alt = "+data.Alt_traj_itent.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Trajectory Intent Data Alt = "+data.Alt_traj_itent.ToString() + "\n";
                     }
-                    
+                    if (data.Lat_traj_int_wgs84 != 0)
+                    {
+                        aircraft_data = aircraft_data + "Trajectory Intent Data Lat = " + data.Lat_traj_int_wgs84.ToString() + "\n";
+                    }
+                    if (data.Long_traj_int_wgs84 != 0)
+                    {
+                        aircraft_data = aircraft_data + "Trajectory Intent Data Long = " + data.Long_traj_int_wgs84.ToString() + "\n";
+                    }
+                    if (data.Point_type != null)
+                    {
+                        aircraft_data = aircraft_data + "Point Type  = " + data.Point_type + "\n";
+                    }
+                    if (data.Td != null)
+                    {
+                        aircraft_data = aircraft_data + "TD  = " + data.Td + "\n";
+                    }
+                    if (data.isTurn_radius_available)
+                    {
+                        aircraft_data = aircraft_data + "TTR aviable" + "\n";
+                    }
+                    if (data.isTov_available)
+                    {
+                        aircraft_data = aircraft_data + "TOV aviable" + "\n";
+                    }
+                    if (data.Time_over_time!=0)
+                    {
+                        aircraft_data = aircraft_data + "Time Over Time = " + data.Time_over_time.ToString() + "\n";
+                    }
+                    if (data.Tcp_trun_radius != 0)
+                    {
+                        aircraft_data = aircraft_data + "Tcp Trun Radius  = " + data.Tcp_trun_radius.ToString() + "\n";
+                    }
+                    if (data.Comm_capability_transpond!=null)
+                    {
+                        aircraft_data = aircraft_data + "Capability of the Transponder  = " + data.Comm_capability_transpond + "\n";
+                    }
+                    if (data.Flight_status != null)
+                    {
+                        aircraft_data = aircraft_data + "Flight Status  = " + data.Flight_status + "\n";
+                    }
+                    if (data.isSpecific_capability)
+                    {
+                        aircraft_data = aircraft_data + "Specific service capability" + "\n";
+                    }  
+                    if (data.Alt_capability != null)
+                    {
+                        aircraft_data = aircraft_data + "Alt Capability  = " + data.Alt_capability + "\n";
+                    }
+                    if (data.isAircraft_id_capability)
+                    {
+                        aircraft_data = aircraft_data + "Aircraft Identification Capability" + "\n";
+                    }
+                    if (data.Acas_adsb != null)
+                    {
+                        aircraft_data = aircraft_data + "ACAS ADS-B  = " + data.Acas_adsb + "\n";
+                    }
+                    if (data.Mult_nav_aids_adsb != null)
+                    {
+                        aircraft_data = aircraft_data + "MN  = " + data.Mult_nav_aids_adsb + "\n";
+                    }
+                    if (data.Diff_correlation_adsb != null)
+                    {
+                        aircraft_data = aircraft_data + "DC  = " + data.Diff_correlation_adsb + "\n";
+                    }
+                    if (data.isTranpond_ground_bit_set_adsb)
+                    {
+                        aircraft_data = aircraft_data + "Tranpond Ground Bit Set \n";
+                    }
+                    if (data.Flight_stat_adsb != null)
+                    {
+                        aircraft_data = aircraft_data + "STAT  = " + data.Flight_stat_adsb + "\n";
+                    }
+                    if (data.Barom_vert_rate != 0)
+                    {
+                        aircraft_data = aircraft_data + "Barom Vert Rate  = " + data.Barom_vert_rate.ToString() + "\n";
+                    }
+                    if (data.Geom_vert_rate != 0)
+                    {
+                        aircraft_data = aircraft_data + "Geom Vert Rate  = " + data.Geom_vert_rate.ToString() + "\n";
+                    }
+                    if (data.Roll_angle != 0)
+                    {
+                        aircraft_data = aircraft_data + "Roll Angle  = " + data.Roll_angle.ToString() + "\n";
+                    }
+                    if (data.Turn_indicator != null)
+                    {
+                        aircraft_data = aircraft_data + "Turn Indicator  = " + data.Turn_indicator + "\n";
+                    }
+                    if (data.Rate_of_turn != 0)
+                    {
+                        aircraft_data = aircraft_data + "Rate Of Turn  = " + data.Rate_of_turn.ToString() + "\n";
+                    }
+                    if (data.Track_angle != 0)
+                    {
+                        aircraft_data = aircraft_data + "Track Angle  = " + data.Track_angle.ToString() + "\n";
+                    }
+                    if (data.GS != 0)
+                    {
+                        aircraft_data = aircraft_data + "GS = " + data.GS.ToString() + "\n";
+                    }
+                    if (data.Vel_uncert_cat != 0)
+                    {
+                        aircraft_data = aircraft_data + "Vel Uncert Cat = " + data.Vel_uncert_cat.ToString() + "\n";
+                    }
+                    if (data.Wind_speed != 0)
+                    {
+                        aircraft_data = aircraft_data + "Wind Speed = " + data.Wind_speed.ToString() + "\n";
+                    }
+                    if (data.Wind_direction != 0)
+                    {
+                        aircraft_data = aircraft_data + "Wind Direction = " + data.Wind_direction.ToString() + "\n";
+                    }
+                    if (data.Temperature != 0)
+                    {
+                        aircraft_data = aircraft_data + "Temperature = " + data.Temperature.ToString() + "\n";
+                    }
+                    if (data.Turbulence != 0)
+                    {
+                        aircraft_data = aircraft_data + "Turbulence = " + data.Turbulence.ToString() + "\n";
+                    }
+                    if (data.Emitter_cat != null)
+                    {
+                        aircraft_data = aircraft_data + "ECAT = " + data.Emitter_cat + "\n";
+                    }
+                    if (data.Aircraft_derived_latWGS84 != 0)
+                    {
+                        aircraft_data = aircraft_data + "Lat WGS84 = " + data.Aircraft_derived_latWGS84.ToString() + "\n";
+                    }
+                    if (data.Aircraft_derived_longWGS84 != 0)
+                    {
+                        aircraft_data = aircraft_data + "Long WGS84 = " + data.Aircraft_derived_longWGS84.ToString() + "\n";
+                    }
+                    if (data.Geom_alt != 0)
+                    {
+                        aircraft_data = aircraft_data + "Geom Alt = " + data.Geom_alt.ToString() + "\n";
+                    }
+                    if (data.Position_uncert != 0)
+                    {
+                        aircraft_data = aircraft_data + "Position Uncert = " + data.Position_uncert.ToString() + "\n";
+                    }
+                    if (data.Ias != 0)
+                    {
+                        aircraft_data = aircraft_data + "IAS = " + data.Ias.ToString() + "\n";
+                    }
+                    if (data.Mach != 0)
+                    {
+                        aircraft_data = aircraft_data + "MACH = " + data.Mach.ToString() + "\n";
+                    }
+                    if (data.Barom_press_sett != 0)
+                    {
+                        aircraft_data = aircraft_data + "Barometric pression = " + data.Barom_press_sett.ToString() + "\n";
+                    }
+                    if (aircraft_data == "")
+                    {
+                        aircraft_data = "-";
+                                                                                                                                                                                                                                                                                                                                           }
+                    row.Add(aircraft_data);
+                    row.Add(data.Track_num.ToString());
+                    string track_status = "";
+                    if (data.IsMonosensor)
+                    {
+                        track_status = "Monosensor track \n";
+                    }
+                    if (data.IsSPI)       
+                    {                                                                                                                                                                                                                    track_status = track_status + "SPI present \n";
+                    }
+                    if (data.Most_reliable_height!=null)
+                    {
+                        track_status = track_status + "Most Reliable Heigh = "+ data.Most_reliable_height + "\n";
+                    }
+                    if (data.Source_080 != null)
+                    {
+                        track_status = track_status + "SRC = " + data.Source_080 + "\n";
+                    }
+                    if (data.IsTrackConfirmed)
+                    {
+                        track_status = track_status + "Confirmed track \n";
+                    }
+                    if (data.Type_of_track!=null)
+                    {
+                        track_status = track_status + "Type Of Track = " + data.Type_of_track + "\n";
+                    }
+                    if (data.IsLast_Msg)
+                    {
+                        track_status = track_status + "Last msg tx to user \n";
+                    }
+                    if (data.IsFlight_plan_correlated)
+                    {
+                        track_status = track_status + "Flight Plan Correlated \n";
+                    }
+                    if (data.IsAdsb_inconsistent)
+                    {
+                         track_status = track_status + "ADS-B inconsistent with other info\n";
+                    }
+                    if (data.IsSlave_track_promotion)
+                    {
+                        track_status = track_status + "Slave Track Promotion \n";
+                    }
+                    if (data.Service_used!=null)
+                    {
+                        track_status = track_status + "Service Used = " + data.Service_used + "\n";
+                    }
+                    if (data.IsAmalgamation)
+                    {
+                        track_status = track_status + "Amalgamation Process \n";
+                    }
+                    if (data.Type_of_target_int4!=null)
+                    {
+                        track_status = track_status + "Mode 4 interrogation = " + data.Type_of_target_int4 + "\n";
+                    }
+                    if (data.IsMilitary_emergency)
+                    {
+                        track_status = track_status + "Military Emergency \n";
+                    }
+                    if (data.IsMilitary_id)
+                    {
+                        track_status = track_status + "Military ID in last report \n";
+                    }
+                    if (data.Type_of_target_int5!=null)
+                    {
+                        track_status = track_status + "Mode 5 interrogation = " + data.Type_of_target_int5 + "\n";
+                    }
+                    if (data.IsAge_of_trackUpdate_higher_than_thold)
+                    {
+                        track_status = track_status + "Age Of Track Update Higher Than Threshold \n";
+                    }
+                    if (data.IsAge_of_PSR_higher_than_thold)
+                    {
+                        track_status = track_status + "Age Of PSR Higher Than Threshold \n";
+                    }
+                    if (data.IsAge_of_SSR_higher_than_thold)
+                    {
+                        track_status = track_status + "Age Of SSR Higher Than Threshold \n";
+                    }
+                    if (data.IsAge_of_ModeS_higher_than_thold)
+                    {
+                        track_status = track_status + "Age Of ModeS Higher Than Threshold \n";
+                    }
+                    if (data.IsAge_of_ADSB_higher_than_thold)
+                    {
+                        track_status = track_status + "Age Of ADSB Higher Than Threshold \n";
+                    }
+                    if (data.IsSpecial_used_code)
+                    {
+                        track_status = track_status + "Special Used Code \n";
+                    }
+                    if (data.IsAssigned_modeA_code_conflict)
+                    {
+                        track_status = track_status + "Assigned ModeA Code Conflict \n";
+                    }
+                    if (data.Surveillance_data_status!=null)
+                    {
+                        track_status = track_status + "Surveillance Data Status = " + data.Surveillance_data_status + "\n";
+                    }
+                    if (data.Emergency_status_indication!=null)
+                    {
+                        track_status = track_status + "Emergency Status Indication = " + data.Emergency_status_indication + "\n";
+                    }
+                    if (data.IsPotential_false_track_indication)
+                    {
+                        track_status = track_status + "Potential False Track Indication \n";
+                    }
+                    if (data.IsTrack_created_FPLdata)
+                    {
+                        track_status = track_status + "Track created/updated with FPL data \n";
+                    }
+                    if (data.IsDuplicate_3Acode)
+                    {
+                        track_status = track_status + "Duplicate Mode 3/A \n";
+                    }
+                    if (data.IsDuplicate_flight_plan)
+                    {
+                        track_status = track_status + "Duplicate Flight Plan \n";
+                    }
+                    if (data.IsDuplicate_fplan_for_manual_corr)
+                    {
+                        track_status = track_status + "Duplicate FPlan For Manual Corr. \n";
+                    }
+                    if (data.IsSurface_target)
+                    {
+                        track_status = track_status + "Surface Target \n";
+                    }
+                    if (data.IsDuplicate_flight_id)
+                    {
+                        track_status = track_status + "Duplicate Flight ID \n";
+                    }
+                    if (data.IsInconsistent_emerg_code)
+                    {
+                        track_status = track_status + "Inconsistent Emerg Code \n";
+                    }
                     if (track_status == "")
                     {
                         track_status = "-";
                     }
                     row.Add(track_status);
-                    row.Add(data.Track_num.ToString());
-
-                    //row.Add(data.dt.Columns.Add("Track status");
-                    //row.Add(data.dt.Columns.Add("System Track Update Ages");
-                    //row.Add(data.dt.Columns.Add("Mode of Movement");
-                    //row.Add(data.dt.Columns.Add("Track Data Ages");
-                    row.Add("Track status");
-                    row.Add("System Track Update Ages");
-                    row.Add("Mode of Movement");
-                    row.Add("Track Data Ages");
+                    string track_update_ages = "";
+                    if (data.Track_age != 0)
+                    {
+                        track_update_ages = track_update_ages + "Track Age = " + data.Track_age.ToString() + "\n";
+                    }
+                    if (data.Psr_age != 0)
+                    {
+                        track_update_ages = track_update_ages + "PSR Age = " + data.Psr_age.ToString() + "\n";
+                    }
+                    if (data.Ssr_age != 0)
+                    {
+                        track_update_ages = track_update_ages + "SSR Age = " + data.Ssr_age.ToString() + "\n";
+                    }
+                    if (data.Mode_s_age != 0)
+                    {
+                        track_update_ages = track_update_ages + "Mode S Age = " + data.Mode_s_age.ToString() + "\n";
+                    }
+                    if (data.Adsc_age != 0)
+                    {
+                        track_update_ages = track_update_ages + "ADS-C Age = " + data.Adsc_age.ToString() + "\n";
+                    }
+                    if (data.Adsb_ext_sq_age != 0)
+                    {
+                        track_update_ages = track_update_ages + "ES Age = " + data.Adsb_ext_sq_age.ToString() + "\n";
+                    }
+                    if (data.Adsb_vdl_mode4_age != 0)
+                    {
+                        track_update_ages = track_update_ages + "VDL Age = " + data.Adsb_vdl_mode4_age.ToString() + "\n";
+                    }
+                    if (data.Adsb_uat_age != 0)
+                    {
+                        track_update_ages = track_update_ages + "UAT Age = " + data.Adsb_uat_age.ToString() + "\n";
+                    }
+                    if (data.Loop_age != 0)
+                    {
+                        track_update_ages = track_update_ages + "Loop Age = " + data.Loop_age.ToString() + "\n";
+                    }
+                    if (data.Multilater_age != 0)
+                    {
+                        track_update_ages = track_update_ages + "Multilateration Age = " + data.Multilater_age.ToString() + "\n";
+                    }
+                    if (track_update_ages == "")
+                    {
+                        track_update_ages = "-";
+                    }
+                    row.Add(track_update_ages);
+                    string mode_mov = "";
+                    if (data.Status_movement_trans!=null)
+                    {
+                        mode_mov = mode_mov + "Transversal Acceleration  = " + data.Status_movement_trans + "\n";
+                    }
+                    if (data.Status_movement_long!=null)
+                    {
+                        mode_mov = mode_mov + "Longitudinal Acceleration = " + data.Status_movement_long + "\n";
+                    }
+                    if (data.Status_movement_vert!=null)
+                    {
+                        mode_mov = mode_mov + "Vertical Rate = " + data.Status_movement_vert + "\n";
+                    }
+                    if (data.IsAltitudeDiscrepacy)
+                    {
+                        mode_mov = mode_mov + "Altitude Discrepacy \n";
+                    }
+                    if (mode_mov == "")
+                    {
+                        mode_mov = "-";
+                    }
+                    row.Add(mode_mov);
+                    string track_data_age = "";
+                    if (data.Meas_fl_age != 0)
+                    {
+                        track_data_age = track_data_age + "Measured Flight Level Age = " + data.Meas_fl_age.ToString() + "\n";
+                    }
+                    if (data.Mode1_age != 0)
+                    {
+                        track_data_age = track_data_age + "Mode 1 Age = " + data.Mode1_age.ToString() + "\n";
+                    }
+                    if (data.Mode2_age != 0)
+                    {
+                        track_data_age = track_data_age + "Mode 2 Age = " + data.Mode2_age.ToString() + "\n";
+                    }
+                    if (data.Mode3A_age != 0)
+                    {
+                        track_data_age = track_data_age + "Mode 3/A Age = " + data.Mode3A_age.ToString() + "\n";
+                    }
+                    if (data.Mode4_age != 0)
+                    {
+                        track_data_age = track_data_age + "Mode 4 Age = " + data.Mode4_age.ToString() + "\n";
+                    }
+                    if (data.Mode5A_age != 0)
+                    {
+                        track_data_age = track_data_age + "Mode 5 Age = " + data.Mode5A_age.ToString() + "\n";
+                    }
+                    if (data.Mag_head_age != 0)
+                    {
+                        track_data_age = track_data_age + "Magnetic Heading Age = " + data.Mag_head_age.ToString() + "\n";
+                    }
+                    if (data.Ias_mach_age != 0)
+                    {
+                        track_data_age = track_data_age + "IAS/MACH Age = " + data.Ias_mach_age.ToString() + "\n";
+                    }
+                    if (data.Tas_age != 0)
+                    {
+                        track_data_age = track_data_age + "TAS Age = " + data.Tas_age.ToString() + "\n";
+                    }
+                    if (data.Select_alt_age != 0)
+                    {
+                        track_data_age = track_data_age + "Selected Altitude Age = " + data.Select_alt_age.ToString() + "\n";
+                    }
+                    if (data.Fin_select_alt_age != 0)
+                    {
+                        track_data_age = track_data_age + "Final State Selected Altitude Age = " + data.Fin_select_alt_age.ToString() + "\n";
+                    }
+                    if (data.Traj_age != 0)
+                    {
+                        track_data_age = track_data_age + "Trajectory Intent Age = " + data.Traj_age.ToString() + "\n";
+                    }
+                    if (data.Comm_acas_flight_age != 0)
+                    {
+                        track_data_age = track_data_age + "Communication/ACAS Age = " + data.Comm_acas_flight_age.ToString() + "\n";
+                    }
+                    if (data.Stat_by_adsb_age != 0)
+                    {
+                        track_data_age = track_data_age + "Status Reported by ADS-B Age = " + data.Stat_by_adsb_age.ToString() + "\n";
+                    }
+                    if (data.Acas_resol_advisory_age != 0)
+                    {
+                        track_data_age = track_data_age + "ACAS Resolution Advisory Report Age = " + data.Acas_resol_advisory_age.ToString() + "\n";
+                    }
+                    if (data.Baromet_vert_rate_age != 0)
+                    {
+                        track_data_age = track_data_age + "Barometric Vertical Rate Age = " + data.Baromet_vert_rate_age.ToString() + "\n";
+                    }
+                    if (data.Geomet_vert_rate_age != 0)
+                    {
+                        track_data_age = track_data_age + "Geometrical Vertical Rate Age = " + data.Geomet_vert_rate_age.ToString() + "\n";
+                    }
+                    if (data.Roll_angle_age != 0)
+                    {
+                        track_data_age = track_data_age + "Roll Angle Age = " + data.Roll_angle_age.ToString() + "\n";
+                    }
+                    if (data.Track_angle_rate_age != 0)
+                    {
+                        track_data_age = track_data_age + "Track Angle Rate Age = " + data.Track_angle_rate_age.ToString() + "\n";
+                    }
+                    if (data.Track_angle_age != 0)
+                    {
+                        track_data_age = track_data_age + "Track Angle Age = " + data.Track_angle_age.ToString() + "\n";
+                    }
+                    if (data.Gs_age != 0)
+                    {
+                        track_data_age = track_data_age + "GS Age = " + data.Gs_age.ToString() + "\n";
+                    }
+                    if (data.Vel_uncert_age != 0)
+                    {
+                        track_data_age = track_data_age + "Velocity Uncertainty Age = " + data.Vel_uncert_age.ToString() + "\n";
+                    }
+                    if (data.Metd_age != 0)
+                    {
+                        track_data_age = track_data_age + "Meteorological Data Age = " + data.Metd_age.ToString() + "\n";
+                    }
+                    if (data.Emitt_cat_age != 0)
+                    {
+                        track_data_age = track_data_age + "Emitter Category Age = " + data.Emitt_cat_age.ToString() + "\n";
+                    }
+                    if (data.Pos_age != 0)
+                    {
+                        track_data_age = track_data_age + "Position Age = " + data.Pos_age.ToString() + "\n";
+                    }
+                    if (data.Geom_alt_age != 0)
+                    {
+                        track_data_age = track_data_age + "Geometric Altitude Age = " + data.Geom_alt_age.ToString() + "\n";
+                    }
+                    if (data.Pos_uncert_age != 0)
+                    {
+                        track_data_age = track_data_age + "Position Uncertainty Age = " + data.Pos_uncert_age.ToString() + "\n";
+                    }
+                    if (data.ModeSMB_age != 0)
+                    {
+                        track_data_age = track_data_age + "Mode S MB Data Age = " + data.ModeSMB_age.ToString() + "\n";
+                    }
+                    if (data.Ias_age != 0)
+                    {
+                        track_data_age = track_data_age + "IAS Data Age = " + data.Ias_age.ToString() + "\n";
+                    }
+                    if (data.Mach_age != 0)
+                    {
+                        track_data_age = track_data_age + "Mach Age = " + data.Mach_age.ToString() + "\n";
+                    }
+                    if (data.Barom_press_sett_age != 0)
+                    {
+                        track_data_age = track_data_age + "Barometric Pressure Setting Data Age = " + data.Barom_press_sett_age.ToString() + "\n";
+                    }
+                    if (track_data_age == "")
+                    {
+                        track_data_age = "-";
+                    }
+                    row.Add(track_data_age);
                     row.Add(data.FL.ToString());
                     row.Add(data.TGA.ToString());
                     string barometric_alt;
