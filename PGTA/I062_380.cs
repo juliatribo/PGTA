@@ -19,7 +19,7 @@ namespace PGTA
 
         }
 
-        public int getTargetAddress(int b, int b1, int b2)
+        public string getTargetAddress(int b, int b1, int b2)
         {
             string addr1 = Convert.ToString(b, 2);
             string addr2 = Convert.ToString(b1, 2);
@@ -30,7 +30,8 @@ namespace PGTA
             addr3 = bf.padding(addr3);
 
             string addr = addr1 + addr2 + addr3;
-            int target_address = Convert.ToInt32(addr, 2);
+            int target_address1 = Convert.ToInt32(addr, 2);
+            string target_address = target_address1.ToString("X");
 
             return target_address;
         }

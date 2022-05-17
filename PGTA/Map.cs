@@ -16,6 +16,8 @@ using System.Drawing.Drawing2D;
 using SharpKml.Dom;
 using Point = SharpKml.Dom.Point;
 using Placemark = SharpKml.Dom.Placemark;
+using SharpKml.Base;
+using System.Xml.Linq;
 
 namespace PGTA
 {
@@ -168,23 +170,37 @@ namespace PGTA
 
         private void button6_Click(object sender, EventArgs e)
         {
-            var point = new Point
-            {
-               // Coordinate = new Vector(-13.163959, -72.545992),
-            };
-            // This is the Element we are going to save to the Kml file.
-            var placemark = new Placemark
-            {
-                Geometry = point,
-                Name = "Machu Picchu",
-            };
-            // This allows us to save an Element easily.
-            SharpKml.Engine.KmlFile kml = SharpKml.Engine.KmlFile.Create(placemark, false);
-            using (FileStream stream = File.OpenWrite(@"c:\tmp\test_kml_placemark.kml"))
-            {
-                kml.Save(stream);
-            }
+            var document = new Document();
+            Kml kml = new Kml();
+            Placemark placemarks;
+            Point Punto_gps;
+            Style plane = new Style();
+            plane.Id = "planeIcon";
+            plane.Icon = new IconStyle();
+            plane.Icon.Icon = new IconStyle.IconLink(new Uri("http://maps.google.com/mapfiles/kml/shapes/airports.png"));
+            document.AddStyle(plane);
 
+
+            for (int i = 0; i < markerOverlay.Markers.Count(); i++)
+            {
+                Punto_gps = new Point();
+                Punto_gps.Coordinate = new SharpKml.Base.Vector(all_data[i].Latitude, all_data[i].Longitude);
+                placemarks = new Placemark();
+                placemarks.Name = markerOverlay.Markers[i].Tag.ToString();
+                placemarks.Geometry = Punto_gps;
+                placemarks.StyleUrl = new Uri("#planeIcon", UriKind.Relative); ;
+                document.AddFeature(placemarks);;
+                
+            }
+            SharpKml.Engine.KmlFile kmlFile = SharpKml.Engine.KmlFile.Create(document, true);
+
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "KML-File | *.kml";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                kmlFile.Save(System.IO.File.OpenWrite(saveFileDialog.FileName));
+            }
         }
     }
 }

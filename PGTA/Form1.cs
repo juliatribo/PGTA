@@ -580,7 +580,7 @@ namespace PGTA
                                             string track_ages = "";
                                             bool fx_track_ages = true;
                                             int w;//length frns counter
-                                            for (w = 0; fx_track_ages && w < 2; w++)
+                                            for (w = 0; fx_track_ages; w++)
                                             {
                                                 fx_track_ages = false;
                                                 string var1 = Convert.ToString(buffer[position + w], 2);
@@ -1140,13 +1140,18 @@ namespace PGTA
                     row.Add(data.Sic.ToString());
                     row.Add(data.Sac.ToString());;
                     row.Add(data.Service_Id.ToString());
-                    row.Add(data.Time_track_info.ToString());
-                    row.Add(data.Latitude.ToString());
-                    row.Add(data.Longitude.ToString());
-                    row.Add(data.X.ToString());
-                    row.Add(data.Y.ToString());
-                    row.Add(data.Vx.ToString());
-                    row.Add(data.Vy.ToString());
+                    int hor, min, seg;
+                    hor = Convert.ToInt32(data.Time_track_info / 3600);
+                    min = Convert.ToInt32((data.Time_track_info - hor * 3600) / 60);
+                    seg = Convert.ToInt32( data.Time_track_info - (hor * 3600 + min * 60));
+                    string time = hor.ToString() + ":" + min.ToString() + ":" + seg.ToString();
+                    row.Add(time);
+                    row.Add(data.Latitude.ToString()+" º");
+                    row.Add(data.Longitude.ToString()+" º");
+                    row.Add(data.X.ToString()+" m");
+                    row.Add(data.Y.ToString() + " m");
+                    row.Add(data.Vx.ToString() + " m/s");
+                    row.Add(data.Vy.ToString() + " m/s");
                     if (data.Ax != 0)
                     {
                         row.Add(data.Ax.ToString()); 
@@ -1181,7 +1186,7 @@ namespace PGTA
                         row.Add("-");
                     }
                     string aircraft_data = "";
-                    if (data.Target_addr!=0)
+                    if (data.Target_addr!=null)
                     {
                         aircraft_data = "ADR = " + data.Target_addr.ToString() + "\n";
                     }
@@ -1191,7 +1196,7 @@ namespace PGTA
                     }
                     if (data.Mag_heading!=0)
                     {
-                        aircraft_data = aircraft_data + "MHG = " + data.Mag_heading.ToString() + "\n";
+                        aircraft_data = aircraft_data + "MHG = " + data.Mag_heading.ToString() + "º \n";
                     }
                     if (data.IsMach && data.Ias_or_Mach!=0)
                     {
@@ -1199,15 +1204,15 @@ namespace PGTA
                     }
                     else if(data.Ias_or_Mach != 0)
                     {
-                        aircraft_data = aircraft_data + "IAS = " + data.Ias_or_Mach.ToString() + "\n";
+                        aircraft_data = aircraft_data + "IAS = " + data.Ias_or_Mach.ToString() + "NM/s \n";
                     }
                     if (data.Tas != 0)
                     {
-                        aircraft_data = aircraft_data + "TAS = " + data.Tas.ToString() + "\n";
+                        aircraft_data = aircraft_data + "TAS = " + data.Tas.ToString() + " knots \n";
                     }
                     if(data.IsSas)
                     {
-                        aircraft_data = aircraft_data + "Selected Altitude Source Info = "+ data.Source + "\n" +"Selected Altitude = "+ data.Fms_altitude.ToString()+"\n";
+                        aircraft_data = aircraft_data + "Selected Altitude Source Info = "+ data.Source + "\n" +"Selected Altitude = "+ data.Fms_altitude.ToString()+" ft \n";
                     }
                     if(data.IsManageVertical)
                     {
@@ -1223,7 +1228,7 @@ namespace PGTA
                     }
                     if (data.Fms_final_state_altitude!=0)
                     {
-                        aircraft_data = aircraft_data + "Final State Selected Alt = " + data.Fms_final_state_altitude.ToString() + " \n";
+                        aircraft_data = aircraft_data + "Final State Selected Alt = " + data.Fms_final_state_altitude.ToString() + " ft \n";
                     }
                     if (data.isTrajIntentAviable)
                     {
@@ -1235,7 +1240,7 @@ namespace PGTA
                     }
                     if (data.Rep_traj_int_fact!=0)
                     {
-                        aircraft_data = aircraft_data + "Repetition Factor Trajectory Intent Data = " + data.Rep_traj_int_fact.ToString() + " \n";
+                        aircraft_data = aircraft_data + "Repetition Factor Trajectory Intent Data = " + data.Rep_traj_int_fact.ToString() + "\n";
                     }
                     if (data.isTcp_available)
                     {
@@ -1251,15 +1256,15 @@ namespace PGTA
                     }
                     if (data.Alt_traj_itent != 0)
                     {
-                        aircraft_data = aircraft_data + "Trajectory Intent Data Alt = "+data.Alt_traj_itent.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Trajectory Intent Data Alt = "+data.Alt_traj_itent.ToString() + " ft \n";
                     }
                     if (data.Lat_traj_int_wgs84 != 0)
                     {
-                        aircraft_data = aircraft_data + "Trajectory Intent Data Lat = " + data.Lat_traj_int_wgs84.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Trajectory Intent Data Lat = " + data.Lat_traj_int_wgs84.ToString() + " deg \n";
                     }
                     if (data.Long_traj_int_wgs84 != 0)
                     {
-                        aircraft_data = aircraft_data + "Trajectory Intent Data Long = " + data.Long_traj_int_wgs84.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Trajectory Intent Data Long = " + data.Long_traj_int_wgs84.ToString() + " deg \n";
                     }
                     if (data.Point_type != null)
                     {
@@ -1279,11 +1284,11 @@ namespace PGTA
                     }
                     if (data.Time_over_time!=0)
                     {
-                        aircraft_data = aircraft_data + "Time Over Time = " + data.Time_over_time.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Time Over Time = " + data.Time_over_time.ToString() + " s \n";
                     }
                     if (data.Tcp_trun_radius != 0)
                     {
-                        aircraft_data = aircraft_data + "Tcp Trun Radius  = " + data.Tcp_trun_radius.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Tcp Trun Radius  = " + data.Tcp_trun_radius.ToString() + " Nm \n";
                     }
                     if (data.Comm_capability_transpond!=null)
                     {
@@ -1327,15 +1332,15 @@ namespace PGTA
                     }
                     if (data.Barom_vert_rate != 0)
                     {
-                        aircraft_data = aircraft_data + "Barom Vert Rate  = " + data.Barom_vert_rate.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Barom Vert Rate  = " + data.Barom_vert_rate.ToString() + " feet/min \n";
                     }
                     if (data.Geom_vert_rate != 0)
                     {
-                        aircraft_data = aircraft_data + "Geom Vert Rate  = " + data.Geom_vert_rate.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Geom Vert Rate  = " + data.Geom_vert_rate.ToString() + " feet/min \n";
                     }
                     if (data.Roll_angle != 0)
                     {
-                        aircraft_data = aircraft_data + "Roll Angle  = " + data.Roll_angle.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Roll Angle  = " + data.Roll_angle.ToString() + " º \n";
                     }
                     if (data.Turn_indicator != null)
                     {
@@ -1343,15 +1348,15 @@ namespace PGTA
                     }
                     if (data.Rate_of_turn != 0)
                     {
-                        aircraft_data = aircraft_data + "Rate Of Turn  = " + data.Rate_of_turn.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Rate Of Turn  = " + data.Rate_of_turn.ToString() + " º/s \n";
                     }
                     if (data.Track_angle != 0)
                     {
-                        aircraft_data = aircraft_data + "Track Angle  = " + data.Track_angle.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Track Angle  = " + data.Track_angle.ToString() + " º \n";
                     }
                     if (data.GS != 0)
                     {
-                        aircraft_data = aircraft_data + "GS = " + data.GS.ToString() + "\n";
+                        aircraft_data = aircraft_data + "GS = " + data.GS.ToString() + " NM/s \n";
                     }
                     if (data.Vel_uncert_cat != 0)
                     {
@@ -1359,15 +1364,15 @@ namespace PGTA
                     }
                     if (data.Wind_speed != 0)
                     {
-                        aircraft_data = aircraft_data + "Wind Speed = " + data.Wind_speed.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Wind Speed = " + data.Wind_speed.ToString() + " knots \n";
                     }
                     if (data.Wind_direction != 0)
                     {
-                        aircraft_data = aircraft_data + "Wind Direction = " + data.Wind_direction.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Wind Direction = " + data.Wind_direction.ToString() + " º \n";
                     }
                     if (data.Temperature != 0)
                     {
-                        aircraft_data = aircraft_data + "Temperature = " + data.Temperature.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Temperature = " + data.Temperature.ToString() + " ºC \n";
                     }
                     if (data.Turbulence != 0)
                     {
@@ -1379,15 +1384,15 @@ namespace PGTA
                     }
                     if (data.Aircraft_derived_latWGS84 != 0)
                     {
-                        aircraft_data = aircraft_data + "Lat WGS84 = " + data.Aircraft_derived_latWGS84.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Lat WGS84 = " + data.Aircraft_derived_latWGS84.ToString() + " º \n";
                     }
                     if (data.Aircraft_derived_longWGS84 != 0)
                     {
-                        aircraft_data = aircraft_data + "Long WGS84 = " + data.Aircraft_derived_longWGS84.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Long WGS84 = " + data.Aircraft_derived_longWGS84.ToString() + " º \n";
                     }
                     if (data.Geom_alt != 0)
                     {
-                        aircraft_data = aircraft_data + "Geom Alt = " + data.Geom_alt.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Geom Alt = " + data.Geom_alt.ToString() + " ft \n";
                     }
                     if (data.Position_uncert != 0)
                     {
@@ -1395,15 +1400,15 @@ namespace PGTA
                     }
                     if (data.Ias != 0)
                     {
-                        aircraft_data = aircraft_data + "IAS = " + data.Ias.ToString() + "\n";
+                        aircraft_data = aircraft_data + "IAS = " + data.Ias.ToString() + " knots \n";
                     }
                     if (data.Mach != 0)
                     {
-                        aircraft_data = aircraft_data + "MACH = " + data.Mach.ToString() + "\n";
+                        aircraft_data = aircraft_data + "MACH = " + data.Mach.ToString() + " \n";
                     }
                     if (data.Barom_press_sett != 0)
                     {
-                        aircraft_data = aircraft_data + "Barometric pression = " + data.Barom_press_sett.ToString() + "\n";
+                        aircraft_data = aircraft_data + "Barometric pression = " + data.Barom_press_sett.ToString() + " mb \n";
                     }
                     if (aircraft_data == "")
                     {
@@ -1551,43 +1556,43 @@ namespace PGTA
                     string track_update_ages = "";
                     if (data.Track_age != 0)
                     {
-                        track_update_ages = track_update_ages + "Track Age = " + data.Track_age.ToString() + "\n";
+                        track_update_ages = track_update_ages + "Track Age = " + data.Track_age.ToString() + " s \n";
                     }
                     if (data.Psr_age != 0)
                     {
-                        track_update_ages = track_update_ages + "PSR Age = " + data.Psr_age.ToString() + "\n";
+                        track_update_ages = track_update_ages + "PSR Age = " + data.Psr_age.ToString() + " s \n";
                     }
                     if (data.Ssr_age != 0)
                     {
-                        track_update_ages = track_update_ages + "SSR Age = " + data.Ssr_age.ToString() + "\n";
+                        track_update_ages = track_update_ages + "SSR Age = " + data.Ssr_age.ToString() + " s \n";
                     }
                     if (data.Mode_s_age != 0)
                     {
-                        track_update_ages = track_update_ages + "Mode S Age = " + data.Mode_s_age.ToString() + "\n";
+                        track_update_ages = track_update_ages + "Mode S Age = " + data.Mode_s_age.ToString() + " s \n";
                     }
                     if (data.Adsc_age != 0)
                     {
-                        track_update_ages = track_update_ages + "ADS-C Age = " + data.Adsc_age.ToString() + "\n";
+                        track_update_ages = track_update_ages + "ADS-C Age = " + data.Adsc_age.ToString() + " s \n";
                     }
                     if (data.Adsb_ext_sq_age != 0)
                     {
-                        track_update_ages = track_update_ages + "ES Age = " + data.Adsb_ext_sq_age.ToString() + "\n";
+                        track_update_ages = track_update_ages + "ES Age = " + data.Adsb_ext_sq_age.ToString() + " s \n";
                     }
                     if (data.Adsb_vdl_mode4_age != 0)
                     {
-                        track_update_ages = track_update_ages + "VDL Age = " + data.Adsb_vdl_mode4_age.ToString() + "\n";
+                        track_update_ages = track_update_ages + "VDL Age = " + data.Adsb_vdl_mode4_age.ToString() + " s \n";
                     }
                     if (data.Adsb_uat_age != 0)
                     {
-                        track_update_ages = track_update_ages + "UAT Age = " + data.Adsb_uat_age.ToString() + "\n";
+                        track_update_ages = track_update_ages + "UAT Age = " + data.Adsb_uat_age.ToString() + " s \n";
                     }
                     if (data.Loop_age != 0)
                     {
-                        track_update_ages = track_update_ages + "Loop Age = " + data.Loop_age.ToString() + "\n";
+                        track_update_ages = track_update_ages + "Loop Age = " + data.Loop_age.ToString() + " s \n";
                     }
                     if (data.Multilater_age != 0)
                     {
-                        track_update_ages = track_update_ages + "Multilateration Age = " + data.Multilater_age.ToString() + "\n";
+                        track_update_ages = track_update_ages + "Multilateration Age = " + data.Multilater_age.ToString() + " s \n";
                     }
                     if (track_update_ages == "")
                     {
@@ -1619,127 +1624,127 @@ namespace PGTA
                     string track_data_age = "";
                     if (data.Meas_fl_age != 0)
                     {
-                        track_data_age = track_data_age + "Measured Flight Level Age = " + data.Meas_fl_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Measured Flight Level Age = " + data.Meas_fl_age.ToString() + " s \n";
                     }
                     if (data.Mode1_age != 0)
                     {
-                        track_data_age = track_data_age + "Mode 1 Age = " + data.Mode1_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Mode 1 Age = " + data.Mode1_age.ToString() + " s \n";
                     }
                     if (data.Mode2_age != 0)
                     {
-                        track_data_age = track_data_age + "Mode 2 Age = " + data.Mode2_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Mode 2 Age = " + data.Mode2_age.ToString() + " s \n";
                     }
                     if (data.Mode3A_age != 0)
                     {
-                        track_data_age = track_data_age + "Mode 3/A Age = " + data.Mode3A_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Mode 3/A Age = " + data.Mode3A_age.ToString() + " s \n";
                     }
                     if (data.Mode4_age != 0)
                     {
-                        track_data_age = track_data_age + "Mode 4 Age = " + data.Mode4_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Mode 4 Age = " + data.Mode4_age.ToString() + " s \n";
                     }
                     if (data.Mode5A_age != 0)
                     {
-                        track_data_age = track_data_age + "Mode 5 Age = " + data.Mode5A_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Mode 5 Age = " + data.Mode5A_age.ToString() + " s \n";
                     }
                     if (data.Mag_head_age != 0)
                     {
-                        track_data_age = track_data_age + "Magnetic Heading Age = " + data.Mag_head_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Magnetic Heading Age = " + data.Mag_head_age.ToString() + " s \n";
                     }
                     if (data.Ias_mach_age != 0)
                     {
-                        track_data_age = track_data_age + "IAS/MACH Age = " + data.Ias_mach_age.ToString() + "\n";
+                        track_data_age = track_data_age + "IAS/MACH Age = " + data.Ias_mach_age.ToString() + " s \n";
                     }
                     if (data.Tas_age != 0)
                     {
-                        track_data_age = track_data_age + "TAS Age = " + data.Tas_age.ToString() + "\n";
+                        track_data_age = track_data_age + "TAS Age = " + data.Tas_age.ToString() + " s \n";
                     }
                     if (data.Select_alt_age != 0)
                     {
-                        track_data_age = track_data_age + "Selected Altitude Age = " + data.Select_alt_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Selected Altitude Age = " + data.Select_alt_age.ToString() + " s \n";
                     }
                     if (data.Fin_select_alt_age != 0)
                     {
-                        track_data_age = track_data_age + "Final State Selected Altitude Age = " + data.Fin_select_alt_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Final State Selected Altitude Age = " + data.Fin_select_alt_age.ToString() + " s \n";
                     }
                     if (data.Traj_age != 0)
                     {
-                        track_data_age = track_data_age + "Trajectory Intent Age = " + data.Traj_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Trajectory Intent Age = " + data.Traj_age.ToString() + " s \n";
                     }
                     if (data.Comm_acas_flight_age != 0)
                     {
-                        track_data_age = track_data_age + "Communication/ACAS Age = " + data.Comm_acas_flight_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Communication/ACAS Age = " + data.Comm_acas_flight_age.ToString() + " s \n";
                     }
                     if (data.Stat_by_adsb_age != 0)
                     {
-                        track_data_age = track_data_age + "Status Reported by ADS-B Age = " + data.Stat_by_adsb_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Status Reported by ADS-B Age = " + data.Stat_by_adsb_age.ToString() + " s \n";
                     }
                     if (data.Acas_resol_advisory_age != 0)
                     {
-                        track_data_age = track_data_age + "ACAS Resolution Advisory Report Age = " + data.Acas_resol_advisory_age.ToString() + "\n";
+                        track_data_age = track_data_age + "ACAS Resolution Advisory Report Age = " + data.Acas_resol_advisory_age.ToString() + " s \n";
                     }
                     if (data.Baromet_vert_rate_age != 0)
                     {
-                        track_data_age = track_data_age + "Barometric Vertical Rate Age = " + data.Baromet_vert_rate_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Barometric Vertical Rate Age = " + data.Baromet_vert_rate_age.ToString() + " s \n";
                     }
                     if (data.Geomet_vert_rate_age != 0)
                     {
-                        track_data_age = track_data_age + "Geometrical Vertical Rate Age = " + data.Geomet_vert_rate_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Geometrical Vertical Rate Age = " + data.Geomet_vert_rate_age.ToString() + " s \n";
                     }
                     if (data.Roll_angle_age != 0)
                     {
-                        track_data_age = track_data_age + "Roll Angle Age = " + data.Roll_angle_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Roll Angle Age = " + data.Roll_angle_age.ToString() + " s \n";
                     }
                     if (data.Track_angle_rate_age != 0)
                     {
-                        track_data_age = track_data_age + "Track Angle Rate Age = " + data.Track_angle_rate_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Track Angle Rate Age = " + data.Track_angle_rate_age.ToString() + " s \n";
                     }
                     if (data.Track_angle_age != 0)
                     {
-                        track_data_age = track_data_age + "Track Angle Age = " + data.Track_angle_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Track Angle Age = " + data.Track_angle_age.ToString() + " s \n";
                     }
                     if (data.Gs_age != 0)
                     {
-                        track_data_age = track_data_age + "GS Age = " + data.Gs_age.ToString() + "\n";
+                        track_data_age = track_data_age + "GS Age = " + data.Gs_age.ToString() + " s \n";
                     }
                     if (data.Vel_uncert_age != 0)
                     {
-                        track_data_age = track_data_age + "Velocity Uncertainty Age = " + data.Vel_uncert_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Velocity Uncertainty Age = " + data.Vel_uncert_age.ToString() + " s \n";
                     }
                     if (data.Metd_age != 0)
                     {
-                        track_data_age = track_data_age + "Meteorological Data Age = " + data.Metd_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Meteorological Data Age = " + data.Metd_age.ToString() + " s \n";
                     }
                     if (data.Emitt_cat_age != 0)
                     {
-                        track_data_age = track_data_age + "Emitter Category Age = " + data.Emitt_cat_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Emitter Category Age = " + data.Emitt_cat_age.ToString() + " s \n";
                     }
                     if (data.Pos_age != 0)
                     {
-                        track_data_age = track_data_age + "Position Age = " + data.Pos_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Position Age = " + data.Pos_age.ToString() + " s \n";
                     }
                     if (data.Geom_alt_age != 0)
                     {
-                        track_data_age = track_data_age + "Geometric Altitude Age = " + data.Geom_alt_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Geometric Altitude Age = " + data.Geom_alt_age.ToString() + " s \n";
                     }
                     if (data.Pos_uncert_age != 0)
                     {
-                        track_data_age = track_data_age + "Position Uncertainty Age = " + data.Pos_uncert_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Position Uncertainty Age = " + data.Pos_uncert_age.ToString() + " s \n";
                     }
                     if (data.ModeSMB_age != 0)
                     {
-                        track_data_age = track_data_age + "Mode S MB Data Age = " + data.ModeSMB_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Mode S MB Data Age = " + data.ModeSMB_age.ToString() + " s \n";
                     }
                     if (data.Ias_age != 0)
                     {
-                        track_data_age = track_data_age + "IAS Data Age = " + data.Ias_age.ToString() + "\n";
+                        track_data_age = track_data_age + "IAS Data Age = " + data.Ias_age.ToString() + " s \n";
                     }
                     if (data.Mach_age != 0)
                     {
-                        track_data_age = track_data_age + "Mach Age = " + data.Mach_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Mach Age = " + data.Mach_age.ToString() + " s \n";
                     }
                     if (data.Barom_press_sett_age != 0)
                     {
-                        track_data_age = track_data_age + "Barometric Pressure Setting Data Age = " + data.Barom_press_sett_age.ToString() + "\n";
+                        track_data_age = track_data_age + "Barometric Pressure Setting Data Age = " + data.Barom_press_sett_age.ToString() + " s \n";
                     }
                     if (track_data_age == "")
                     {
