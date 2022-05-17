@@ -27,7 +27,7 @@ namespace PGTA
         int octal_mode3A;
         string target_id_status;
         string target_id_245;
-        int target_addr;
+        string target_addr;
         string target_id_380;
         double mag_heading;
         bool is_mach;
@@ -285,7 +285,7 @@ namespace PGTA
         public int Octal_mode3A { get { return octal_mode3A; } set { octal_mode3A = value; } }
         public string Target_id_status { get { return target_id_status; } set { target_id_status = value; } }
         public string Target_id_245 { get { return target_id_245; } set { target_id_245 = value; } }
-        public int Target_addr { get { return target_addr; } set { target_addr = value; } }
+        public string Target_addr { get { return target_addr; } set { target_addr = value; } }
         public string Target_id_380 { get { return target_id_380; } set { target_id_380 = value; } }
         public double Mag_heading { get { return mag_heading; } set { mag_heading = value; } }
         public bool IsMach { get { return is_mach; } set { is_mach = value; } }
