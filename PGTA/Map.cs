@@ -141,6 +141,7 @@ namespace PGTA
                 {
                     GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(all_data[i].Latitude, all_data[i].Longitude), RotateImg(plane, all_data[i].Mag_heading));
                     marker.Tag = all_data[i].Octal_mode3A;
+                    marker.ToolTipText = all_data[i].Mag_heading.ToString();
                     markerOverlay2.Markers.Add(marker);
                 }
             }
@@ -174,23 +175,24 @@ namespace PGTA
             Kml kml = new Kml();
             Placemark placemarks;
             Point Punto_gps;
-            Style plane = new Style();
-            plane.Id = "planeIcon";
-            plane.Icon = new IconStyle();
-            plane.Icon.Icon = new IconStyle.IconLink(new Uri("http://maps.google.com/mapfiles/kml/shapes/airports.png"));
-            document.AddStyle(plane);
+           
 
 
             for (int i = 0; i < markerOverlay.Markers.Count(); i++)
             {
+                Style plane = new Style();
+                plane.Id = "planeIcon";
+                plane.Icon = new IconStyle();
+                plane.Icon.Heading = Convert.ToDouble(markerOverlay.Markers[i].ToolTipText);
+                plane.Icon.Icon = new IconStyle.IconLink(new Uri("http://maps.google.com/mapfiles/kml/shapes/airports.png"));
+                document.AddStyle(plane);
                 Punto_gps = new Point();
-                Punto_gps.Coordinate = new SharpKml.Base.Vector(all_data[i].Latitude, all_data[i].Longitude);
+                Punto_gps.Coordinate = new SharpKml.Base.Vector(markerOverlay.Markers[i].Position.Lat, markerOverlay.Markers[i].Position.Lng);
                 placemarks = new Placemark();
                 placemarks.Name = markerOverlay.Markers[i].Tag.ToString();
                 placemarks.Geometry = Punto_gps;
-                placemarks.StyleUrl = new Uri("#planeIcon", UriKind.Relative); ;
-                document.AddFeature(placemarks);;
-                
+                placemarks.StyleUrl = new Uri("#planeIcon", UriKind.Relative); 
+                document.AddFeature(placemarks);
             }
             SharpKml.Engine.KmlFile kmlFile = SharpKml.Engine.KmlFile.Create(document, true);
 
