@@ -9,9 +9,9 @@ namespace PGTA
     internal class I062_340_TYP
     {
         string typ;
-        bool sim;
-        bool rab;
-        bool tst;
+        string sim;
+        string rab;
+        string tst;
         public I062_340_TYP(int b)
         {
 
@@ -58,41 +58,41 @@ namespace PGTA
             char sim = oct1[3];
             if (sim.Equals('0'))
             {
-                this.sim = false; //Actual target report
+                this.sim = "Actual target report"; 
             }
             else
             {
-                this.sim = true; //Simulated target report
+                this.sim = "Simulated target report"; 
             }
             char rab = oct1[4];
             if (rab.Equals('0'))
             {
-                this.rab = false; //Report from target transponder
+                this.rab = "Report from target transponder"; 
             }
             else
             {
-                this.rab = true; //Report from field monitor
+                this.rab = "Report from field monitor"; 
             }
             char tst = oct1[5];
             if (tst.Equals('0'))
             {
-                this.tst = false; //Real target report
+                this.tst = "Real target report"; 
             }
             else
             {
-                this.tst = true; //Test target report
+                this.tst = "Test target report"; 
             }
 
         }
-        public bool getTST()
+        public string getTST()
         {
             return this.tst;
         }
-        public bool getRAB()
+        public string getRAB()
         {
             return this.rab;
         }
-        public bool getSIM()
+        public string getSIM()
         {
             return this.sim;
         }

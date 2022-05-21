@@ -28,6 +28,7 @@ namespace PGTA
         GMapOverlay markerOverlay;
         GMapOverlay markerOverlay2;
         System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+        double time;
 
         public Map()
         {
@@ -58,13 +59,49 @@ namespace PGTA
 
         }
 
+        private void Map_Load(object sender, EventArgs e)
+        {
+            numericUpDown2.Value = 9;
+            time = all_data[0].Time_track_info - 2; 
+
+            double horas = time / 3600;
+            int horas_int = (int)Math.Floor(horas);
+
+
+            double min = (time - horas_int * 3600) / 60;
+            int min_int = (int)Math.Floor(min);
+
+            double sec = time - (horas_int * 3600 + min_int * 60);
+            int sec_int = (int)Math.Floor(sec);
+
+            label1.Text = horas_int.ToString() + " h" + min_int.ToString() + " min" + sec_int.ToString() + " s";
+
+            label3.Text = "Target ID or Mode3A";
+
+        }
+
         private void timer1_Tick(object sender, EventArgs e) 
         {
             Bitmap plane1 = (Bitmap)Image.FromFile("img/plane.png");
             Bitmap plane = new Bitmap(plane1, new Size(plane1.Width / 12, plane1.Height / 12));
 
-            System.TimeSpan timeSpan = watch.Elapsed;
-            double time = timeSpan.TotalSeconds + all_data[0].Time_track_info;
+            //System.TimeSpan timeSpan = watch.Elapsed;
+            //double interval = timeSpan.TotalSeconds;
+
+            time = time + timer1.Interval / 1000;
+            //time = time + interval;
+            double horas = time / 3600;
+            int horas_int = (int)Math.Floor(horas);
+
+
+            double min = (time - horas_int * 3600) / 60;
+            int min_int = (int)Math.Floor(min);
+
+            double sec = time - (horas_int * 3600 + min_int * 60);
+            int sec_int = (int)Math.Floor(sec);
+
+            label1.Text = horas_int.ToString() + " h " + min_int.ToString() + " min " + sec_int.ToString() + " s";
+
 
             while (time >= all_data[counter].Time_track_info)
             {
@@ -142,6 +179,14 @@ namespace PGTA
                     GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(all_data[i].Latitude, all_data[i].Longitude), RotateImg(plane, all_data[i].Mag_heading));
                     marker.Tag = all_data[i].Octal_mode3A;
                     markerOverlay2.Markers.Add(marker);
+                    if (all_data[i].Target_id_245 != null)
+                    {
+                        label3.Text = all_data[i].Target_id_245.ToString();
+                    }
+                    else
+                    {
+                        label3.Text = all_data[i].Octal_mode3A.ToString();
+                    }
                 }
             }
             
@@ -166,6 +211,7 @@ namespace PGTA
         private void button5_Click(object sender, EventArgs e)
         {
             markerOverlay2.Markers.Clear();
+            label3.Text = "Target ID or Mode3A";
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -201,6 +247,21 @@ namespace PGTA
             {
                 kmlFile.Save(System.IO.File.OpenWrite(saveFileDialog.FileName));
             }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            markerOverlay2.Markers.Clear();
+            markerOverlay.Markers.Clear();
+
+            time = (double)numericUpDown2.Value * 3600;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            markerOverlay2.Markers.Clear();
+            markerOverlay.Markers.Clear();
+            time = all_data[0].Time_track_info - 2;
         }
     }
 }

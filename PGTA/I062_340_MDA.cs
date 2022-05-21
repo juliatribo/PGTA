@@ -9,9 +9,9 @@ namespace PGTA
     internal class I062_340_MDA
     {
         int code_mode3A;
-        bool v_mda;
-        bool g_mda;
-        bool l_mda;
+        string v_mda;
+        string g_mda;
+        string l_mda;
         public I062_340_MDA(int b, int b1)
         {
 
@@ -28,29 +28,29 @@ namespace PGTA
             char v = oct_str[0];
             if (v.Equals('0'))
             {
-                this.v_mda = true; //Code validated
+                this.v_mda = "Code validated"; //Code validated
             }
             else
             {
-                this.v_mda = false; //Code no validated
+                this.v_mda = "Code no validated"; //Code no validated
             }
             char g = oct_str[1];
             if (g.Equals('0'))
             {
-                this.g_mda = false; //Default
+                this.g_mda = "Default"; //Default
             }
             else
             {
-                this.g_mda = true; //Garbled code
+                this.g_mda = "Garbled code"; //Garbled code
             }
             char l = oct_str[2];
             if (l.Equals('0'))
             {
-                this.l_mda = false; //Mode 3A code as derived from the reply of the transponder
+                this.l_mda = "Mode 3A code as derived from the reply of the transponder"; 
             }
             else
             {
-                this.l_mda = true; //Smoothed Mode 3/A code as provided by a sensor local tracker
+                this.l_mda = "Smoothed Mode 3/A code as provided by a sensor local tracker"; 
             }
 
             string sub_A = oct_str.Substring(4, 3);
@@ -77,15 +77,15 @@ namespace PGTA
         {
             return this.code_mode3A;
         }
-        public bool getV()
+        public string getV()
         {
             return this.v_mda;
         }
-        public bool getG()
+        public string getG()
         {
             return this.g_mda;
         }
-        public bool getL()
+        public string getL()
         {
             return this.l_mda;
         }

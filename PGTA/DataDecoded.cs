@@ -172,7 +172,7 @@ namespace PGTA
 
         double flight_level;
         double track_geometric_altitude;
-        int track_barometric_altitude;
+        double track_barometric_altitude;
         bool correctionQNH;
         double rate_climb_descent;
         string vehicle;
@@ -242,19 +242,19 @@ namespace PGTA
         double theta;
 
         int height;
-        bool validated_code_340;
-        bool garbled_code_340;
+        string validated_code_340;
+        string garbled_code_340;
         double last_mesured_modeC_code;
 
-        bool v_mda;
-        bool g_mda;
-        bool l_mda;
+        string v_mda;
+        string g_mda;
+        string l_mda;
         int codeM3A;
 
         string typ_val;
-        bool sim;
-        bool rab;
-        bool tst;
+        string sim;
+        string rab;
+        string tst;
         int sic2;
         int sac2;
 
@@ -432,7 +432,7 @@ namespace PGTA
    
         public double FL { get { return flight_level; } set { flight_level = value; } }
         public double TGA { get { return track_geometric_altitude; } set { track_geometric_altitude = value; } }
-        public int TBA { get { return track_barometric_altitude; } set { track_barometric_altitude = value; } }
+        public double TBA { get { return track_barometric_altitude; } set { track_barometric_altitude = value; } }
         public bool CorrectionQNH { get { return correctionQNH; } set { correctionQNH = value; } }
         public double Rate { get { return rate_climb_descent; } set { rate_climb_descent = value; } }
         public string Vehicle { get { return vehicle; } set { vehicle = value; } }
@@ -509,19 +509,19 @@ namespace PGTA
         public double THETA { get { return theta; } set { theta = value; } }
         public int HEIGHT { get { return height; } set { height = value; } }
 
-        public bool VC { get { return validated_code_340; } set { validated_code_340 = value; } }
-        public bool GC { get { return garbled_code_340; } set { garbled_code_340 = value; } }
+        public string VC { get { return validated_code_340; } set { validated_code_340 = value; } }
+        public string GC { get { return garbled_code_340; } set { garbled_code_340 = value; } }
         public double Code_Mc { get { return last_mesured_modeC_code; } set { last_mesured_modeC_code = value; } }
 
        
-        public bool V_mda { get { return v_mda; } set { v_mda = value; } }
-        public bool G_mda { get { return g_mda; } set { g_mda = value; } }
-        public bool L_mda { get { return l_mda; } set { l_mda = value; } }
+        public string V_mda { get { return v_mda; } set { v_mda = value; } }
+        public string G_mda { get { return g_mda; } set { g_mda = value; } }
+        public string L_mda { get { return l_mda; } set { l_mda = value; } }
         public int CodeM3A { get { return codeM3A; } set { codeM3A = value; } }
  
-        public bool TST { get { return tst; } set { tst = value; } }
-        public bool RAB { get { return rab; } set { rab = value; } }
-        public bool SIM { get { return sim; } set { sim = value; } }
+        public string TST { get { return tst; } set { tst = value; } }
+        public string RAB { get { return rab; } set { rab = value; } }
+        public string SIM { get { return sim; } set { sim = value; } }
         public string Typ_val { get { return typ_val; } set { typ_val = value; } }
         public int SIC2 { get { return sic2; } set { sic2 = value; } }
         public int SAC2 { get { return sac2; } set { sac2 = value; } }

@@ -734,7 +734,6 @@ namespace PGTA
                                             }
                                             break;
 
-                                        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                         case 17://I062/136 Measured Flight Level 
                                             I062_136 c17 = new I062_136(buffer[position], buffer[position + 1]);
                                             data.FL = c17.getFl();
@@ -770,6 +769,7 @@ namespace PGTA
                                                 fx_data = false;
                                                 string oct = Convert.ToString(buffer[position + l], 2);
                                                 oct = bf.padding(oct);
+                                                total_data = total_data + oct;
                                                 if (oct[7].Equals('1'))
                                                 {
                                                     fx_data = true;
@@ -1029,6 +1029,8 @@ namespace PGTA
 
                                         case 28: //I062/340 Measured Information (1+)
                                             string oct1 = Convert.ToString(buffer[position], 2);
+                                            Basic_functions bf1 = new Basic_functions();
+                                            oct1 = bf1.padding(oct1);
                                             position = position + 1;
                                             for (int i = 0; i < oct1.Length; i++)
                                             {
@@ -1037,7 +1039,7 @@ namespace PGTA
                                                 {
                                                     switch (i)
                                                     {
-                                                        case 0: //Sensor Identification  ¿tengo que poner los datos en los que ya habia o nueva variable?
+                                                        case 0: //Sensor Identification  
                                                             data.SID = true;
                                                             I062_340_SID c28_0 = new I062_340_SID(buffer[position], buffer[position + 1]);
                                                             data.SAC2 = c28_0.getSAC();
@@ -1069,7 +1071,7 @@ namespace PGTA
                                                             position = position + 2;
                                                             break;
 
-                                                        case 4: //Last Measured Mode 3/A code  ¿¿¿¿¿¿¿¿hace ref al de la cat 060????????????
+                                                        case 4: //Last Measured Mode 3/A code  
                                                             data.MDA = true;
                                                             I062_340_MDA c28_4 = new I062_340_MDA(buffer[position], buffer[position + 1]);
                                                             data.V_mda = c28_4.getV();
@@ -1143,10 +1145,10 @@ namespace PGTA
                     int hor, min, seg;
                     hor = Convert.ToInt32(data.Time_track_info / 3600);
                     min = Convert.ToInt32((data.Time_track_info - hor * 3600) / 60);
-                    seg = Convert.ToInt32( data.Time_track_info - (hor * 3600 + min * 60));
+                    seg = Convert.ToInt32(data.Time_track_info - (hor * 3600 + min * 60));
                     string time = hor.ToString() + ":" + min.ToString() + ":" + seg.ToString();
                     row.Add(time);
-                    row.Add(data.Latitude.ToString()+" º");
+                    row.Add(data.Latitude.ToString() + " º");
                     row.Add(data.Longitude.ToString()+" º");
                     row.Add(data.X.ToString()+" m");
                     row.Add(data.Y.ToString() + " m");
