@@ -1145,8 +1145,33 @@ namespace PGTA
                     int hor, min, seg;
                     hor = Convert.ToInt32(data.Time_track_info / 3600);
                     min = Convert.ToInt32((data.Time_track_info - hor * 3600) / 60);
-                    seg = Convert.ToInt32(data.Time_track_info - (hor * 3600 + min * 60));
-                    string time = hor.ToString() + ":" + min.ToString() + ":" + seg.ToString();
+                    seg = Convert.ToInt32( data.Time_track_info - (hor * 3600 + min * 60));
+                    string shor, smin, sseg;
+                    if (hor <= 9)
+                    {
+                        shor = "0" + hor.ToString();
+                    }
+                    else
+                    {
+                        shor = hor.ToString();
+                    }
+                    if (min <= 9)
+                    {
+                        smin = "0" + min.ToString();
+                    }
+                    else
+                    {
+                        smin = min.ToString();
+                    }
+                    if (seg <= 9)
+                    {
+                        sseg = "0" + seg.ToString();
+                    }
+                    else
+                    {
+                        sseg = seg.ToString();
+                    }
+                    string time = shor + ":" + smin + ":" + sseg;
                     row.Add(time);
                     row.Add(data.Latitude.ToString() + " º");
                     row.Add(data.Longitude.ToString()+" º");
