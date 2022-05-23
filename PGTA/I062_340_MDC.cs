@@ -8,8 +8,8 @@ namespace PGTA
 {
     internal class I062_340_MDC
     {
-        bool v;
-        bool g;
+        string v;
+        string g;
         double code_modeC;
         public I062_340_MDC(int b, int b1)
         {
@@ -27,35 +27,35 @@ namespace PGTA
             char v = oct_str[0];
             if (v.Equals('0'))
             {
-                this.v = true; //Code validated
+                this.v = "Code Validated"; //Code validated
             }
             else
             {
-                this.v = false; //Code no validated
+                this.v = "Code no validated"; //Code no validated
             }
             char g = oct_str[1];
             if (g.Equals('0'))
             {
-                this.g = false; //Default
+                this.g = "Default"; //Default
             }
             else
             {
-                this.g = true; //Garbled code
+                this.g = "Garbled code"; //Garbled code
             }
 
             string code = oct_str.Substring(2, 14);
-            this.code_modeC = Convert.ToDouble(Convert.ToInt32(code, 2)) * (1 / 4);
+            this.code_modeC = Convert.ToDouble(Convert.ToInt32(code, 2)) * (0.25);
 
         }
         public double getCodeModeC()
         {
             return this.code_modeC;
         }
-        public bool getV()
+        public string getV()
         {
             return this.v;
         }
-        public bool getG()
+        public string getG()
         {
             return this.g;
         }

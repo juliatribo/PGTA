@@ -9,7 +9,7 @@ namespace PGTA
     internal class I062_135
     {
         //Calculated Track Barometric Altitude
-        int tba;
+        double tba;
         bool correctionQNH;
 
         public I062_135(int b, int b1)
@@ -36,16 +36,16 @@ namespace PGTA
             if (tba_str[0].ToString().Equals('1'))
             {
                 tba_str = bf.complement2(tba_str);
-                this.tba = Convert.ToInt32(tba_str, 2) * -25;
+                this.tba = Convert.ToDouble(Convert.ToInt32(tba_str, 2)) * -0.25;
             }
             else
             {
-                this.tba = Convert.ToInt32(tba_str, 2) * 25;
+                this.tba = Convert.ToDouble(Convert.ToInt32(tba_str, 2)) * 0.25;
             }
 
         }
 
-        public int getTba()
+        public double getTba()
         {
             return this.tba;
         }
