@@ -256,6 +256,7 @@ namespace PGTA
             markerOverlay2.Markers.Clear();
             markerOverlay.Markers.Clear();
             change = true;
+            initialTime = (double)numericUpDown2.Value * 3600;
         }
 
         private void button8_Click(object sender, EventArgs e)
