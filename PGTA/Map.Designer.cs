@@ -48,6 +48,7 @@
             // 
             // gMapControl1
             // 
+            this.gMapControl1.AutoSize = true;
             this.gMapControl1.Bearing = 0F;
             this.gMapControl1.CanDragMap = true;
             this.gMapControl1.EmptyTileColor = System.Drawing.Color.Navy;
@@ -206,6 +207,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1419, 699);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.numericUpDown2);
@@ -223,6 +225,7 @@
             this.Name = "Map";
             this.Text = "Map";
             this.Load += new System.EventHandler(this.Map_Load);
+            this.SizeChanged += new System.EventHandler(this.Map_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -44,6 +44,9 @@ namespace PGTA
       
         private void gMapControl1_Load(object sender, EventArgs e)
         {
+            
+            gMapControl1.Width = Screen.FromControl(this).Bounds.Width-40;
+            gMapControl1.Height = Screen.FromControl(this).Bounds.Height-40;
             gMapControl1.DragButton = MouseButtons.Left;
             gMapControl1.CanDragMap = true;
             gMapControl1.MapProvider = GMapProviders.GoogleMap;
@@ -68,7 +71,6 @@ namespace PGTA
 
             double horas = initialTime / 3600;
             int horas_int = (int)Math.Floor(horas);
-
 
             double min = (initialTime - horas_int * 3600) / 60;
             int min_int = (int)Math.Floor(min);
@@ -108,14 +110,28 @@ namespace PGTA
             {
                 for (int i = 0; i < markerOverlay.Markers.Count(); i++)
                 {
-                    if (Convert.ToInt32(markerOverlay.Markers[i].Tag) == all_data[counter].Octal_mode3A)
+                    if(all_data[counter].Target_id_245 != null)
+                    {
+                        if(markerOverlay.Markers[i].Tag.ToString() == all_data[counter].Target_id_245)
+                        {
+                            markerOverlay.Markers.RemoveAt(i);
+                        }
+                    }
+                    else if (markerOverlay.Markers[i].Tag.ToString() == all_data[counter].Octal_mode3A.ToString())
                     {
                         markerOverlay.Markers.RemoveAt(i);
                     }
                 }
 
                 GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(all_data[counter].Latitude, all_data[counter].Longitude), RotateImg(plane, all_data[counter].Mag_heading));
-                marker.Tag = all_data[counter].Octal_mode3A;
+                if (all_data[counter].Target_id_245 != null)
+                {
+                    marker.Tag = all_data[counter].Target_id_245;
+                }
+                else
+                {
+                    marker.Tag = all_data[counter].Octal_mode3A;
+                }
                 markerOverlay.Markers.Add(marker);
                 counter++;
             }
@@ -130,12 +146,12 @@ namespace PGTA
 
         private void button2_Click(object sender, EventArgs e)
         {
-            timer1.Interval = 10000;
+            timer1.Interval = 100;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            timer1.Interval = 20000;
+            timer1.Interval = 50;
         }
 
         public Bitmap RotateImg(Bitmap bmpimage, double ang)
@@ -174,27 +190,31 @@ namespace PGTA
 
             for (int i = 0; i < all_data.Length; i++)
             {
-                if (all_data[i] != null && all_data[i].Octal_mode3A == Convert.ToInt32(item.Tag))
+                if (all_data[counter].Target_id_245 != null)
+                {
+                    if (all_data[i] != null && all_data[i].Target_id_245 == item.Tag.ToString())
+                    {
+                        GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(all_data[i].Latitude, all_data[i].Longitude), RotateImg(plane, all_data[i].Mag_heading));
+                        marker.Tag = all_data[i].Target_id_245;
+                        markerOverlay2.Markers.Add(marker);
+                        label3.Text = all_data[i].Target_id_245.ToString();
+                        
+                    }
+                }
+                else if (all_data[i] != null && all_data[i].Octal_mode3A == Convert.ToInt32(item.Tag))
                 {
                     GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(all_data[i].Latitude, all_data[i].Longitude), RotateImg(plane, all_data[i].Mag_heading));
                     marker.Tag = all_data[i].Octal_mode3A;
-                    marker.ToolTipText = all_data[i].Mag_heading.ToString();
                     markerOverlay2.Markers.Add(marker);
-                    if (all_data[i].Target_id_245 != null)
-                    {
-                        label3.Text = all_data[i].Target_id_245.ToString();
-                    }
-                    else
-                    {
-                        label3.Text = all_data[i].Octal_mode3A.ToString();
-                    }
+                    label3.Text = all_data[i].Octal_mode3A.ToString();
                 }
-            }
 
+            }
 
             gMapControl1.Overlays.Add(markerOverlay2);
         }
 
+        //Boton para iniciar o parar la simulación
         private void button4_Click(object sender, EventArgs e)
         {
             if (button4.Text == "Stop")
@@ -209,11 +229,13 @@ namespace PGTA
             }
         }
 
+        //Boton para eliminar las trazas
         private void button5_Click(object sender, EventArgs e)
         {
             markerOverlay2.Markers.Clear();
         }
 
+        //Boton para exportar a kml las posiciones de los aviones
         private void button6_Click(object sender, EventArgs e)
         {
             var document = new Document();
@@ -221,14 +243,11 @@ namespace PGTA
             Placemark placemarks;
             Point Punto_gps;
 
-
-
             for (int i = 0; i < markerOverlay.Markers.Count(); i++)
             {
                 Style plane = new Style();
                 plane.Id = "planeIcon";
                 plane.Icon = new IconStyle();
-                plane.Icon.Heading = Convert.ToDouble(markerOverlay.Markers[i].ToolTipText);
                 plane.Icon.Icon = new IconStyle.IconLink(new Uri("http://maps.google.com/mapfiles/kml/shapes/airports.png"));
                 document.AddStyle(plane);
                 Punto_gps = new Point();
@@ -251,20 +270,28 @@ namespace PGTA
         }
     
 
-    private void button7_Click(object sender, EventArgs e)
+        //Boton para iniciar la simulacion desde una hora determinada
+        private void button7_Click(object sender, EventArgs e)
         {
             markerOverlay2.Markers.Clear();
             markerOverlay.Markers.Clear();
-            change = true;
             initialTime = (double)numericUpDown2.Value * 3600;
+            change = true;
         }
 
+        //Boton restart
         private void button8_Click(object sender, EventArgs e)
         {
             markerOverlay2.Markers.Clear();
             markerOverlay.Markers.Clear();
-            change = true;
             initialTime = all_data[0].Time_track_info - 2;
+            change = true;
+        }
+
+        private void Map_SizeChanged(object sender, EventArgs e)
+        {
+            gMapControl1.Width = Screen.FromControl(this).Bounds.Width-70;
+            gMapControl1.Height = Screen.FromControl(this).Bounds.Height-70;
         }
     }
 }

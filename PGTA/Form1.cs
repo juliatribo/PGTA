@@ -19,7 +19,7 @@ namespace PGTA
         {
 
             OpenFileDialog archivo = new OpenFileDialog();
-            //archivo.Filter = "Archivos asterix(*.asterix)|*.asterix" ;
+            archivo.Filter = "Archivos ast(*.ast)|*.ast" ;
 
 
             if (archivo.ShowDialog() == DialogResult.OK)
@@ -1173,8 +1173,10 @@ namespace PGTA
                     }
                     string time = shor + ":" + smin + ":" + sseg;
                     row.Add(time);
-                    row.Add(data.Latitude.ToString() + " º");
-                    row.Add(data.Longitude.ToString()+" º");
+                    double lat_red = Math.Round(data.Latitude, 2);
+                    row.Add(lat_red.ToString() + " º");
+                    double long_red = Math.Round(data.Longitude, 2);
+                    row.Add(long_red.ToString()+" º");
                     row.Add(data.X.ToString()+" m");
                     row.Add(data.Y.ToString() + " m");
                     row.Add(data.Vx.ToString() + " m/s");
@@ -1878,8 +1880,8 @@ namespace PGTA
                     row2.ItemArray = row.ToArray();
                     dt.Rows.Add(row2);
                 }
-
-                MessageBox.Show("finaaaal");
+                fileToolStripMenuItem.Enabled = false;
+                //MessageBox.Show("finaaaal");
 
    
 
@@ -1914,7 +1916,6 @@ namespace PGTA
                 }
             }
         }
-
     }
 
 }
