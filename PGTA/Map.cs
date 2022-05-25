@@ -82,7 +82,6 @@ namespace PGTA
 
             label1.Text = horas_int.ToString() + " h" + min_int.ToString() + " min" + sec_int.ToString() + " s";
 
-            label3.Text = "Target ID or Mode3A";
             Load_Small_Data();
 
             dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;

@@ -48,9 +48,9 @@ namespace PGTA
                     dt.Columns.Add("Vy (Cartesian)");
                     dt.Columns.Add("ax (Cartesian)");
                     dt.Columns.Add("ay (Cartesian)");
-                    dt.Columns.Add("Octal Mode 3A");
+                    dt.Columns.Add("Octal_Mode_3A");
                     dt.Columns.Add("Target Identification Status");
-                    dt.Columns.Add("Target ID");
+                    dt.Columns.Add("Target_ID");
                     dt.Columns.Add("Aircraft delivered Data (Click row to expand)");
                     dt.Columns.Add("Track number");
                     dt.Columns.Add("Track status (Click row to expand)");
@@ -1887,6 +1887,7 @@ namespace PGTA
                     dataGridView1.DataSource = dt;
                     dataGridView1.Visible = true;
                     mapToolStripMenuItem.Enabled = true;
+                    textBox1.Visible = true;
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.ToString()); }
@@ -1928,6 +1929,13 @@ namespace PGTA
         {
             dataGridView1.Width = Screen.FromControl(this).Bounds.Width;
             dataGridView1.Height = Screen.FromControl(this).Bounds.Height;
+        }
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+            string filter = string.Format("Octal_Mode_3A LIKE '%{0}%' OR Target_ID LIKE '%{0}%'", textBox1.Text); //Condicón para filtrar las dos columnas
+
+            (dataGridView1.DataSource as DataTable).DefaultView.RowFilter = filter;
         }
     }
 
